@@ -1,38 +1,26 @@
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState, useRef } from "react"
-import { RotatingLines } from 'react-loader-spinner'
+import { useState } from "react"
+import { RotatingLines } from "react-loader-spinner"
 
 const SignUp = () => {
-    const [tester, setTester] = useState(false)
-    // const buttonIndice = useRef('')
-    const [textForButton, setTexForButton] = useState('Suivant')
+    const [showPassword, setShowPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [textForButton, setTextForButton] = useState('Suivant')
 
-    const ButtonDurationWithSpinner = () => {
-        setTester(!tester)
-        console.log(tester)
+    const handleClick = () => {
+        setIsLoading(true)
 
-        setTexForButton(
-            <RotatingLiness
-            />
-        )
-        DurationTester();
+        setTimeout(() => {
+            setIsLoading(false)
+            setShowPassword(true)
+            // setTextForButton('Connexion')
+        }, 2000)
     }
 
-    const DurationTester = () => {
-        if (!tester) {
-             setTimeout(() => {
-                setTexForButton('Suivant')
-                setTester(!tester)
-                console.log(tester)
-            }, "2000")
-        }
-    }
     return (
-
         <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-4">
-
             <motion.div
                 className="bg-white rounded-xl shadow-md p-8 w-full max-w-sm text-center"
                 initial={{ opacity: 0, y: 30 }}
@@ -45,27 +33,35 @@ const SignUp = () => {
                     placeholder="Email ou numéro de mobile"
                     className="mb-2"
                 />
-                {
-                    tester ? (
-                        <>
-                            <Input
-                                placeholder="Votre mot de passe"
-                                className="mb-2"
-                                type="password"
-                            />
-                        </>
-                    ) : console.log('faux')
-                }
+
+                <Input
+                    placeholder="Votre mot de passe"
+                    className="mb-2"
+                    type="password"
+                />
+
                 <div className="text-sm text-[#0070ba] text-left mb-4 cursor-pointer hover:underline">
                     Adresse email oubliée ?
                 </div>
 
-                <Button className="bg-[#0070ba] w-full rounded-full hover:bg-[#005c9c] mb-4"
-                    onClick={
-                        ButtonDurationWithSpinner
-                    }
+                <Button
+                    className="bg-[#0070ba] w-full rounded-full hover:bg-[#005c9c] mb-4 flex justify-center items-center gap-2"
+                    onClick={handleClick}
+                    disabled={isLoading}
                 >
-                    {textForButton}
+                    {isLoading ? (
+                        <RotatingLines
+                            visible={true}
+                            height="20"
+                            width="20"
+                            color="white"
+                            strokeWidth="5"
+                            animationDuration="0.75"
+                            ariaLabel="spinner"
+                        />
+                    ) : (
+                        textForButton
+                    )}
                 </Button>
 
                 <div className="flex items-center my-4">
@@ -74,13 +70,9 @@ const SignUp = () => {
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
 
-
-                <Button variant="outline" className="w-full rounded-full"
-
-                >
+                <Button variant="outline" className="w-full rounded-full">
                     Ouvrir un compte
                 </Button>
-
 
                 <div className="mt-6 text-sm text-gray-500 flex items-center justify-center gap-1">
                     <span role="img" aria-label="flag">🇨🇮</span>
@@ -95,22 +87,3 @@ const SignUp = () => {
 }
 
 export default SignUp
-
-
-
-// spinner et autre wey
-const RotatingLiness = () => {
-    return (
-        <RotatingLines
-            visible={true}
-            height="96"
-            width="96"
-            color="grey"
-            strokeWidth="5"
-            animationDuration="0.75"
-            ariaLabel="rotating-lines-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-        />
-    )
-}
