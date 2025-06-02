@@ -25,6 +25,9 @@ const Home_personnal = () => {
                         </button>
                         <button
                             className=" rounded-full p-3  bg-[#0070ba] text-white"
+                            onClick={() => 
+                                navigate("/inscription")
+                            }
                         >
                             creer un compte
                         </button>

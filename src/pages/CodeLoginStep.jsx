@@ -16,9 +16,12 @@ const CodeLoginStep = () => {
                     <a href="#" className="text-[#0070ba] text-sm hover:underline">Ce n’est pas vous ?</a>
                 </div>
 
-                <div className="">
-                    {/* Logo et texte */}
-                    <h2 className="text-xl font-semibold text-center mb-2 text-[#1f1f1f]">WaveWallet</h2>
+                <div className="flex justify-center">
+                    <img
+                        src="https://cdn.prod.website-files.com/62446230dcb514b828a6e237/677ed61188695f2316217fc5_Wave-2_0-logo-fullcolour-rgb.svg"
+                        alt="Logo Wave"
+                        className="w-40 h-20"
+                    />
                 </div>
                 <div className="">
                     <p className="text-center text-xl text-gray-600 mb-4">Connectez-vous rapidement avec un code à usage unique.</p>

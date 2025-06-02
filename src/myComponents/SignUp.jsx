@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
+import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
+    const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [textForButton, setTextForButton] = useState('Suivant')
@@ -96,7 +98,9 @@ const SignUp = () => {
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
 
-                <Button variant="outline" className="w-full rounded-full">
+                <Button variant="outline" className="w-full rounded-full" 
+                onClick ={()=>{navigate("/inscription")}}
+                >
                     Ouvrir un compte
                 </Button>
 
