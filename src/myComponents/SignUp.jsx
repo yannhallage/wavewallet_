@@ -1,8 +1,11 @@
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
+
 
 const SignUp = () => {
+    const [tester, setTester] = useState(false)
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-4">
             <motion.div
@@ -19,12 +22,29 @@ const SignUp = () => {
                     placeholder="Email ou numéro de mobile"
                     className="mb-2"
                 />
+                {
+                    tester ? (
+                        <>
+                            <Input
+                                placeholder="Email ou numéro de mobile"
+                                className="mb-2"
+                            />
+                        </>
+                    ) : console.log('faux')
+                }
                 <div className="text-sm text-[#0070ba] text-left mb-4 cursor-pointer hover:underline">
                     Adresse email oubliée ?
                 </div>
 
                 {/* Bouton Suivant */}
-                <Button className="bg-[#0070ba] w-full rounded-full hover:bg-[#005c9c] mb-4">
+                <Button className="bg-[#0070ba] w-full rounded-full hover:bg-[#005c9c] mb-4"
+                    onClick={
+                        () => {
+                            setTester(!tester)
+                            console.log(tester)
+                        }
+                    }
+                >
                     Suivant
                 </Button>
 
@@ -36,7 +56,9 @@ const SignUp = () => {
                 </div>
 
                 {/* Bouton secondaire */}
-                <Button variant="outline" className="w-full rounded-full">
+                <Button variant="outline" className="w-full rounded-full"
+
+                >
                     Ouvrir un compte
                 </Button>
 
