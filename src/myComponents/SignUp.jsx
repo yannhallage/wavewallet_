@@ -1,4 +1,6 @@
 import { motion } from "framer-motion"
+import toast, { Toaster } from 'react-hot-toast';
+
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
@@ -8,10 +10,20 @@ const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [textForButton, setTextForButton] = useState('Suivant')
+    // const [justAnText, setJustAnText] = useState('')
+    // les valeurs normalemnt des champs 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+
+    const notify = (justAnText) => toast(justAnText, {
+        icon: '❌',
+    })
 
     const handleClick = () => {
         setIsLoading(true)
 
+        VerificationDesChamps();
         setTimeout(() => {
             setIsLoading(false)
             setShowPassword(true)
@@ -19,6 +31,16 @@ const SignUp = () => {
         }, 2000)
     }
 
+    const VerificationDesChamps = () => {
+        if (email.trim() === '' || password.trim() === '') {
+            // setJustAnText('Veuillez remplir tous les champs')
+            notify(
+                'Veuillez remplir tous les champs '
+            );
+        } else {
+            console.log(email, password)
+        }
+    }
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-4">
             <motion.div
@@ -32,12 +54,16 @@ const SignUp = () => {
                 <Input
                     placeholder="Email ou numéro de mobile"
                     className="mb-2"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
 
                 <Input
                     placeholder="Votre mot de passe"
                     className="mb-2"
                     type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <div className="text-sm text-[#0070ba] text-left mb-4 cursor-pointer hover:underline">
@@ -81,6 +107,11 @@ const SignUp = () => {
                         <option>English</option>
                     </select>
                 </div>
+
+                <Toaster
+                    position="bottom-center"
+                    reverseOrder={false}
+                />
             </motion.div>
         </div>
     )
