@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-
+import { useNavigate } from "react-router-dom"
 const Home_personnal = () => {
-
+    const navigate = useNavigate()
     return (
+        
         <>
             <header className="p-4 border">
                 <div className="flex justify-between container mx-auto">
@@ -16,6 +17,9 @@ const Home_personnal = () => {
                     <div className="space-x-2">
                         <button
                             className="border text-[#0070ba] rounded-full p-3"
+                            onClick={() =>{
+                                navigate("/auth")
+                            }}
                         >
                             connexion
                         </button>

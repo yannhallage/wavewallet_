@@ -44,10 +44,10 @@ const SignIn = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <div className="flex justify-between items-center">
+                            {/* <div className="flex justify-between items-center">
                                 <Label htmlFor="password">Mot de passe</Label>
                                 <a href="#" className="text-sm text-muted-foreground hover:underline">Oublié ?</a>
-                            </div>
+                            </div> */}
                             <Input id="password" type="password" placeholder="Mot de passe" />
                         </div>
                     </CardContent>
