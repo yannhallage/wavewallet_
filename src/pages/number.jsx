@@ -3,16 +3,31 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { RotatingLines } from "react-loader-spinner"
+// import toast, { Toaster } from 'react-hot-toast';
+import { DrawerDemo } from "../myComponents/DrawerDemo"
+
 
 const NumberPhone = () => {
     const [email, setEmail] = useState("")
+    const [justTest, setJustTest] = useState(false)
     const navigate = useNavigate()
+    const [tstButton, setTstButton] = useState("Suivant")
+
     const handleSubmit = () => {
         if (email.trim() === "") {
             alert("Veuillez entrer un numero .")
             return
         }
-        console.log("Email:", email)
+
+        setTstButton(<RotatingLines />)
+        setTimeout(() => {
+            console.log("Email:", email)
+            setJustTest(true)
+            setTstButton('Suivant')
+        }, 2000)
+        setJustTest(false)
+
     }
 
     return (
@@ -61,11 +76,17 @@ const NumberPhone = () => {
                             className="bg-blue-500 hover:bg-blue-700 w-full"
                             onClick={handleSubmit}
                         >
-                            Suivant
+                            {
+                                tstButton
+                            }
                         </Button>
                     </div>
                 </motion.div>
             </div>
+
+            <DrawerDemo
+                tester={justTest}
+            />
         </section>
     )
 }

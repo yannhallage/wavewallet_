@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
 import { InputOTPDemo } from "../myComponents/InputOTPDemo"
+
 const CodeOTP = () => {
     return (
         <>
