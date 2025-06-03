@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { motion } from "framer-motion";
+import { NavButtons } from "../myComponents/navButtons";
 
 
 const MyAccount = () => {
@@ -6,14 +8,6 @@ const MyAccount = () => {
     const [listenner, setListenner] = useState(false)
     const [showing, setShowing] = useState('')
 
-    // const eyeOpen = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-    //     <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-    //     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-    // </svg>
-
-    // const eyeClosed = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-    //     <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-    // </svg>
 
     return (
         <>
@@ -38,12 +32,9 @@ const MyAccount = () => {
                                 ))}
                             </nav>
                         </div>
-
-                        {/* Icônes + Déconnexion */}
                         <div className="flex items-center space-x-5 text-[18px]">
-                            {/* Icônes */}
+
                             <span className="p-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
-                                {/* Bell Icon */}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" strokeWidth={1.5}
                                     stroke="currentColor" className="w-6 h-6">
@@ -57,7 +48,6 @@ const MyAccount = () => {
                             </span>
 
                             <span className="p-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
-                                {/* Settings Icon */}
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" strokeWidth={1.5}
                                     stroke="currentColor" className="w-6 h-6">
@@ -89,11 +79,8 @@ const MyAccount = () => {
                 </div>
             </section>
 
-            {/* details */}
-
             <section className="container mx-auto px-4">
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mt-11">
-                    {/* Section Transactions récentes */}
                     <div className=" p-6 rounded-md space-y-5 bg-gray-50">
                         <h1 className="text-xl font-semibold text-gray-800">Transactions récentes</h1>
 
@@ -103,8 +90,12 @@ const MyAccount = () => {
                                     key={index}
                                     className="flex justify-between items-center p-3 bg-white rounded-md shadow-sm"
                                 >
-                                    {/* Avatar + Nom */}
-                                    <div className="flex items-center space-x-3">
+
+                                    <motion.div className="flex items-center space-x-3"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.6 }}
+                                    >
                                         <img
                                             src="https://grafikart.fr/images/default.png"
                                             width={40}
@@ -116,25 +107,31 @@ const MyAccount = () => {
                                             <span className="block font-medium text-base">Yann Hallage</span>
                                             <span className="text-xs text-gray-500">Transaction réussie</span>
                                         </div>
-                                    </div>
+                                    </motion.div>
 
-                                    {/* Montant + Date */}
-                                    <div className="text-right text-gray-700">
+                                    <motion.div className="text-right text-gray-700"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.6 }}
+                                    >
                                         <span className="block font-semibold text-base">50 000 FCFA</span>
                                         <span className="text-xs text-gray-500">
                                             {new Date().toLocaleDateString('fr-FR')}
                                         </span>
-                                    </div>
+                                    </motion.div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Carte de crédit stylisée */}
                     <div className="p-6 rounded-md bg-white shadow-sm">
                         <h1 className="text-xl font-semibold text-gray-800 mb-4">Carte de crédit</h1>
 
-                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-xl shadow-md">
+                        <motion.div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-6 rounded-xl shadow-md"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                        >
                             <div className="flex justify-between items-center mb-4">
                                 <span className="text-sm">CARTE WAVEWALLET</span>
                                 <img
@@ -143,9 +140,11 @@ const MyAccount = () => {
                                     className="h-6"
                                 />
                             </div>
-                            <div className="text-lg flex space-x-2 tracking-widest font-mono mb-4">
+                            <div className="text-lg flex space-x-3 tracking-widest font-mono mb-4">
                                 <span
-                                    onClick={() => { console.log('declencher pour voir le sold') }}
+                                    onClick={() => {
+                                        setListenner(!listenner)
+                                    }}
                                 >
                                     {
                                         listenner ? (
@@ -159,13 +158,11 @@ const MyAccount = () => {
                                             </svg>
                                         )
                                     }
-                                    {showing}
-                                </span>
 
-                                {/* valuer */}
+                                </span>
                                 <span>
                                     {
-                                        Cash
+                                        listenner ? Cash.toLocaleString("fr-FR") + " FCFA" : "************"
                                     }
                                 </span>
                             </div>
@@ -175,39 +172,19 @@ const MyAccount = () => {
                                     <span className="font-semibold">Yann Hallage</span>
                                 </div>
                                 <div>
-                                    <span className="block text-xs text-gray-200">Expire</span>
-                                    <span className="font-semibold">12/27</span>
+                                    <span className="block text-xs text-gray-200">Numero</span>
+                                    <span className="font-semibold">0747170370</span>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/*  */}
 
                         <div className="mt-5 space-y-4">
-                            <div className="text-xl">
+                            <div className="font-semibold text-gray-800">
                                 Effectuer
                             </div >
-
-                            <div className="flex space-x-4">
-                                <div className="flex items-center hover:shadow-lg transition duration-300  space-x-2 px-4 py-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9.75L12 3l9 6.75v9.75A1.5 1.5 0 0 1 19.5 21H4.5A1.5 1.5 0 0 1 3 19.5V9.75z" />
-                                    </svg>
-                                    <span>Accueil</span>
-                                </div>
-                                <div className="flex items-center  hover:shadow-lg transition duration-300  space-x-2 px-4 py-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                    </svg>
-                                    <span>Envoyer</span>
-                                </div>
-                                <div className="flex items-center hover:shadow-lg transition duration-300 space-x-2 px-4 py-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v3m0 12v3m9-9h-3M6 12H3m14.31 5.31l-2.12-2.12m-8.48 0l-2.12 2.12m12.72-12.72l-2.12 2.12m-8.48 0L5.69 4.69" />
-                                    </svg>
-                                    <span>Recharger</span>
-                                </div>
-                            </div>
+                            <NavButtons />
                         </div>
                     </div>
                 </div>
@@ -217,4 +194,4 @@ const MyAccount = () => {
         </>
     )
 }
-export default MyAccount;
+export default MyAccount;   
