@@ -179,7 +179,7 @@ const MyAccount = () => {
                 </div>
 
             </section>
-            <section className="mt-[159px] ">
+            <section className="mt-[170px] ">
                 <Footer
                 />
             </section>
