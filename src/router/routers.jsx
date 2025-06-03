@@ -6,6 +6,7 @@ import CodeOTP from "../pages/codeotp";
 import Inscription from "../pages/inscription";
 import NumberPhone from "../pages/number";
 import Informations from "../pages/informations";
+import MyAccount from "../pages/myaccount";
 
 const Component_Router = () => {
     return (
@@ -19,7 +20,7 @@ const Component_Router = () => {
                 <Route path="/inscription" element={<Inscription />} />
                 <Route path="/inscription/number" element={<NumberPhone />} />
                 <Route path="/inscription/informations" element={<Informations />} />
-                <Route path="/myaccount" element={<Home_personnal />} />
+                <Route path="/myaccount" element={<MyAccount />} />
             </Routes>
         </Router>
     );
