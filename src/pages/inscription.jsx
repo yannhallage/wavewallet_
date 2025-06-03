@@ -3,8 +3,39 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
+import { useNavigate } from "react-router-dom"
+import toast, { Toaster } from 'react-hot-toast';
 
 const Inscription = () => {
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+    const [textForButton, setTextForButton] = useState('Suivant')
+
+    const notify = (justAnText) => toast.error(justAnText)
+
+    const VerificationDesChamps = () => {
+        if (email) {
+            setTextForButton(
+                <RotatingLines />
+            )
+            console.log("verification des champs")
+            console.log(email)
+            TempsDeVerification(2000);
+
+            navigate('/inscription/number')
+            
+        } else {
+            notify("veuillez remplis les champs")
+        }
+    }
+
+    const TempsDeVerification = (temps) => {
+        setTimeout(() => {
+            setTextForButton('Suivant')
+        }, temps)
+    }
+
+    // on va s'en doute 
     return (
         <>
             <section>
@@ -30,7 +61,9 @@ const Inscription = () => {
                                     className="w-20 h-20"
                                 />
                             </div>
-                            <div className="mt-6 text-sm cursor-pointer text-gray-500 flex items-center justify-center gap-1">
+                            <div className="mt-6 text-sm cursor-pointer text-gray-500 flex items-center justify-center gap-1"
+                                onClick={() => navigate('/authentification')}
+                            >
                                 Se connecter
                             </div>
                         </div>
@@ -45,6 +78,8 @@ const Inscription = () => {
                         <div className="space-y-4">
                             <Input
                                 type="text"
+                                value={email}
+                                onChange={(e) => { setEmail(e.target.value) }}
                                 placeholder="Votre adresse email"
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus"
                             />
@@ -52,14 +87,21 @@ const Inscription = () => {
                             <div className="flex justify-center">
                                 {/* button pour envoyer les donnees */}
                                 <Button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-11 "
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-11 "
+                                    onClick={VerificationDesChamps}
                                 >
-                                    Suivant
+                                    {
+                                        textForButton
+                                    }
                                 </Button>
                             </div>
                         </div>
                     </motion.div>
                 </div>
+                <Toaster
+                    position="bottom-center"
+                    reverseOrder={false}
+                />
             </section>
         </>
     )

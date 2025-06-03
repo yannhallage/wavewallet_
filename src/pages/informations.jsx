@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { RotatingLines } from "react-loader-spinner"
-// import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 // import { DrawerDemo } from "../myComponents/DrawerDemo"
 
 
 const Informations = () => {
     const [nom, setNom] = useState("")
     const [prenom, setPrenom] = useState("")
-    const [ville ,setVille] = useState("")
+    const [ville, setVille] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
 
@@ -21,12 +21,9 @@ const Informations = () => {
     const [tstButton, setTstButton] = useState("Suivant")
 
     const handleSubmit = () => {
-        if (nom.trim() === "") {
-            alert("Veuillez entrer un numero .")
-            return
+        if (nom === "" || prenom === "" || ville === "" || password === "" ) {
+            toast.error('Veuillez remplir tous les champs !')
         }
-
-
     }
 
     return (
@@ -109,6 +106,10 @@ const Informations = () => {
                         </Button>
                     </div>
                 </motion.div>
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                />
             </div>
         </section>
     )

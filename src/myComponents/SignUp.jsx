@@ -18,9 +18,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('')
 
 
-    const notify = (justAnText) => toast(justAnText, {
-        icon: '❌',
-    })
+    const notify = (justAnText) => toast.error(justAnText)
 
     const handleClick = () => {
         setIsLoading(true)

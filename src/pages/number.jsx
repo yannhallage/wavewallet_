@@ -4,25 +4,30 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { RotatingLines } from "react-loader-spinner"
-// import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { DrawerDemo } from "../myComponents/DrawerDemo"
+import { Label } from "@/components/ui/label"
+import { SelectDemo } from "../myComponents/SelectDemo"
 
 
 const NumberPhone = () => {
-    const [email, setEmail] = useState("")
+    const [numero, setNumero] = useState("")
     const [justTest, setJustTest] = useState(false)
     const navigate = useNavigate()
     const [tstButton, setTstButton] = useState("Suivant")
 
+
+    const notify = (justAnText) => toast.error(justAnText)
+
     const handleSubmit = () => {
-        if (email.trim() === "") {
-            alert("Veuillez entrer un numero .")
+        if (numero.trim() === "") {
+            notify("Veuillez entrer un numero")
             return
         }
 
         setTstButton(<RotatingLines />)
         setTimeout(() => {
-            console.log("Email:", email)
+            console.log("Email:", numero)
             setJustTest(true)
             setTstButton('Suivant')
         }, 2000)
@@ -64,13 +69,16 @@ const NumberPhone = () => {
                     </div>
 
                     <div className="space-y-4">
-                        <Input
-                            type="text"
-                            placeholder="Numéro de téléphone"
-                            className="w-full"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <div className="flex">
+                            <SelectDemo />
+                            <Input
+                                type="text"
+                                placeholder="Numéro de téléphone"
+                                className="w-full"
+                                value={numero}
+                                onChange={(e) => setNumero(e.target.value)}
+                            />
+                        </div>
 
                         <Button
                             className="bg-blue-500 hover:bg-blue-700 w-full"
@@ -86,6 +94,10 @@ const NumberPhone = () => {
 
             <DrawerDemo
                 tester={justTest}
+            />
+            <Toaster
+                position="top-right"
+                reverseOrder={false}
             />
         </section>
     )
