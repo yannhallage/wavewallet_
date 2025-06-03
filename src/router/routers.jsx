@@ -5,6 +5,7 @@ import CodeLoginStep from "../pages/CodeLoginStep";
 import CodeOTP from "../pages/codeotp";
 import Inscription from "../pages/inscription";
 import NumberPhone from "../pages/number";
+import Informations from "../pages/informations";
 
 const Component_Router = () => {
     return (
@@ -12,11 +13,13 @@ const Component_Router = () => {
             <Routes>
                 <Route path="/" element={<Navigate to="/presentation" replace />} />
                 <Route path="/presentation" element={<Home_personnal />} />
-                <Route path="/auth" element={<Authentification />} />
+                <Route path="/authentification" element={<Authentification />} />
                 <Route path="/verification" element={<CodeLoginStep />} />
                 <Route path="/verification/otp" element={<CodeOTP />} />
                 <Route path="/inscription" element={<Inscription />} />
                 <Route path="/inscription/number" element={<NumberPhone />} />
+                <Route path="/inscription/informations" element={<Informations />} />
+                <Route path="/myaccount" element={<Home_personnal />} />
             </Routes>
         </Router>
     );

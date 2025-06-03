@@ -18,7 +18,7 @@ const Home_personnal = () => {
                         <button
                             className="border text-[#0070ba] rounded-full p-3"
                             onClick={() =>{
-                                navigate("/auth")
+                                navigate("/authentification")
                             }}
                         >
                             connexion
