@@ -37,13 +37,14 @@ export function DrawerMoney({ tester }) {
                 <div className="mx-auto w-full max-w-sm">
                     <DrawerHeader>
                         <DrawerTitle>Connexion avec un code à usage unique</DrawerTitle>
-                        <DrawerDescription>
-                            Code envoyé a votre numéro.
-                        </DrawerDescription>
+                        <div className="text-center space-y-2 mt-2">
+                            <p className="text-green-600 font-semibold text-lg">Succès ✅</p>
+                            <p className="text-gray-700">Montant : <strong>00.00</strong></p>
+                        </div>
                     </DrawerHeader>
 
                     <div className="p-4 space-y-4 ml-11">
-                        <InputOTPDemo />
+                        {/* <InputOTPDemo /> */}
                     </div>
 
                     <DrawerFooter>

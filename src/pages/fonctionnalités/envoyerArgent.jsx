@@ -76,6 +76,7 @@ const EnvoyerArgent = () => {
                                         setTimeout(() => {
                                             setJustePourleChargement("continuez");
                                             setDialogOpen(true)
+                                            setAmount('')
                                         }, 200)
                                     } else {
                                         toast.error("Veuillez remplis les champs!")
