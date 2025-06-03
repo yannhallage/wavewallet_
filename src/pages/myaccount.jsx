@@ -1,15 +1,32 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { motion } from "framer-motion";
 import { NavButtons } from "../myComponents/navButtons";
 import Footer from "../myComponents/footer";
-
+import TransactionRecents from "../myComponents/transactionRecents";
+import { DonneesInscription } from "../context/authContext";
+import EnvoyerArgent from "./fonctionnalités/EnvoyerArgent";
+import RechargerAccount from "./fonctionnalités/rechargerAccount";
 
 const MyAccount = () => {
+
+    const { changeComponent, setChangeComponent } = useContext(DonneesInscription);
     const [Cash, setCash] = useState(200000)
     const [listenner, setListenner] = useState(false)
     const [showing, setShowing] = useState('')
 
-    const test = true
+    const icon_one =
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9.75L12 3l9 6.75v9.75A1.5 1.5 0 0 1 19.5 21H4.5A1.5 1.5 0 0 1 3 19.5V9.75z" />
+        </svg>
+    const icon_two =
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+        </svg>
+
+    const icon_tree = <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v3m0 12v3m9-9h-3M6 12H3m14.31 5.31l-2.12-2.12m-8.48 0l-2.12 2.12m12.72-12.72l-2.12 2.12m-8.48 0L5.69 4.69" />
+    </svg>
+
     return (
         <>
             <section className="p-3 bg-[#074799] text-[#d1f1ff]">
@@ -82,56 +99,12 @@ const MyAccount = () => {
 
             <section className="container mx-auto px-4">
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mt-11">
-                    <div className="p-6 rounded-md space-y-5 bg-gray-50">
-                        <h1 className="text-xl font-semibold text-gray-800">Transactions récentes</h1>
 
-                        <div className="space-y-3">
-                            {
-                                test ? (
-                                    [...Array(10)].map((_, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex justify-between items-center p-3 bg-white rounded-md shadow-sm"
-                                        >
-                                            <motion.div
-                                                className="flex items-center space-x-3"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                transition={{ duration: 0.6 }}
-                                            >
-                                                <img
-                                                    src="https://grafikart.fr/images/default.png"
-                                                    width={40}
-                                                    height={40}
-                                                    alt="Avatar"
-                                                    className="rounded-full"
-                                                />
-                                                <div className="text-gray-800">
-                                                    <span className="block font-medium text-base">Yann Hallage</span>
-                                                    <span className="text-xs text-gray-500">Transaction réussie</span>
-                                                </div>
-                                            </motion.div>
-
-                                            <motion.div
-                                                className="text-right text-gray-700"
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                transition={{ duration: 0.6 }}
-                                            >
-                                                <span className="block font-semibold text-base">50 000 FCFA</span>
-                                                <span className="text-xs text-gray-500">
-                                                    {new Date().toLocaleDateString('fr-FR')}
-                                                </span>
-                                            </motion.div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <DonneesNonTrouvees />
-                                )
-                            }
-                        </div>
+                    <div>
+                        {
+                            changeComponent
+                        }
                     </div>
-
                     <div className="p-6 rounded-md bg-white shadow-sm">
                         <h1 className="text-xl font-semibold text-gray-800 mb-4">Carte de crédit</h1>
 
@@ -182,16 +155,33 @@ const MyAccount = () => {
                             </div>
                         </motion.div>
 
-                        <div className="mt-5 space-y-4">
-                            <div className="font-semibold text-gray-800">Effectuer</div>
-                            <NavButtons />
+                        <div className="mt-5 space-y-4 ">
+                            <div className="font-semibold  text-gray-800">Effectuer</div>
+                            <div className="flex space-x-3">
+                                <NavButtons
+                                    icon={icon_one}
+                                    label={"Accueil"}
+                                    event={() => {window.location.reload()}}
+                                />
+                                <NavButtons
+                                    icon={icon_two}
+                                    label={"Envoyer"}
+                                    event={() => { setChangeComponent(<EnvoyerArgent />) }}
+                                />
+                                <NavButtons
+                                    icon={icon_tree}
+                                    label={"Recharger"}
+                                    event={() => { setChangeComponent(<RechargerAccount />)}}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </section>
             <section className="mt-[100px] ">
-                <Footer />
+                <Footer
+                />
             </section>
         </>
     )
@@ -200,12 +190,3 @@ export default MyAccount;
 
 
 
-const DonneesNonTrouvees = () => {
-    return (
-        <>
-            <div className="text-center text-[#ccc] mt-[100px]">
-               Suivez les crédits et les débits. <br /> Vous trouverez ici votre activité Wave récente
-            </div>
-        </>
-    )
-}

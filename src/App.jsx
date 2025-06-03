@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Component_Router from "./router/routers";
 import { DonneesInscription } from "./context/authContext";
+import TransactionRecents from "./myComponents/transactionRecents";
 
 const App = () => {
   // mail
@@ -20,6 +21,9 @@ const App = () => {
   const [ville_personne, setVille_personne] = useState('')
   const [telephone_personne, setTelephone_personne] = useState('')
   const [motdepasse_personne, setMotdepasse_personne] = useState('')
+  const [changeComponent, setChangeComponent] = useState(
+    <TransactionRecents />
+  )
 
 
   return (
@@ -36,7 +40,9 @@ const App = () => {
         telephone_personne,
         setTelephone_personne,
         motdepasse_personne,
-        setMotdepasse_personne
+        setMotdepasse_personne,
+        changeComponent,
+        setChangeComponent
       }}
     >
       <Component_Router />
