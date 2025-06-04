@@ -7,6 +7,7 @@ import Inscription from "../pages/inscription";
 import NumberPhone from "../pages/number";
 import Informations from "../pages/informations";
 import MyAccount from "../pages/myaccount";
+import Notfound from "../pages/notfound";
 
 const Component_Router = () => {
     return (
@@ -21,6 +22,7 @@ const Component_Router = () => {
                 <Route path="/inscription/number" element={<NumberPhone />} />
                 <Route path="/inscription/informations" element={<Informations />} />
                 <Route path="/myaccount" element={<MyAccount />} />
+                <Route path="*" element={<Notfound />} />
             </Routes>
         </Router>
     );
