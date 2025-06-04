@@ -30,7 +30,7 @@ const MyAccount = () => {
     return (
         <>
             <section className="p-3 bg-[#074799] text-[#d1f1ff]">
-                <div className="container mx-auto">
+                <div className="md:container md:mx-auto">
                     <div className="flex justify-between items-center">
 
                         <div className="flex items-center space-x-6">
@@ -97,9 +97,8 @@ const MyAccount = () => {
                 </div>
             </section>
 
-            <section className="container mx-auto px-4">
+            <section className="md:container md:mx-auto px-4">
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mt-11">
-
                     <div>
                         {
                             changeComponent
@@ -161,7 +160,7 @@ const MyAccount = () => {
                                 <NavButtons
                                     icon={icon_one}
                                     label={"Accueil"}
-                                    event={() => {window.location.reload()}}
+                                    event={() => {setChangeComponent(<TransactionRecents />)}}
                                 />
                                 <NavButtons
                                     icon={icon_two}

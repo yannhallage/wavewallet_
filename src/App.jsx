@@ -21,7 +21,8 @@ const App = () => {
   const [ville_personne, setVille_personne] = useState('')
   const [telephone_personne, setTelephone_personne] = useState('')
   const [motdepasse_personne, setMotdepasse_personne] = useState('')
-  const [montantSold ,setMontantSold] = useState(0)
+  const [montantSold, setMontantSold] = useState(0)
+  const [ajouterNumero, setAjouterNumero] = useState([])
   const [changeComponent, setChangeComponent] = useState(
     <TransactionRecents />
   )
@@ -45,7 +46,9 @@ const App = () => {
         changeComponent,
         setChangeComponent,
         montantSold,
-        setMontantSold
+        setMontantSold,
+        ajouterNumero,
+        setAjouterNumero
       }}
     >
       <Component_Router />

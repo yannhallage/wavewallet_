@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 
 const TransactionRecents = () => {
-    const [test] = useState(true)
+    const [test] = useState(false)
     return (
         <div className="p-6 rounded-md space-y-5 bg-gray-50">
             <h1 className="text-xl font-semibold text-gray-800">Transactions récentes</h1>
@@ -18,9 +18,9 @@ const TransactionRecents = () => {
                             >
                                 <motion.div
                                     className="flex items-center space-x-3"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.6 }}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5 }}
                                 >
                                     <img
                                         src="https://grafikart.fr/images/default.png"
