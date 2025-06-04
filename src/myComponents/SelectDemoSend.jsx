@@ -31,7 +31,7 @@ export function SelectDemoSend() {
                                 <SelectItem value={index}>{item}</SelectItem>
                             )
                         }) : (
-                            <span className="text-[15px] ml-8 text-[#ccc]">
+                            <span className="text-[15px] ml-[110px] text-[#ccc]">
                                 aucun numero
                             </span>
                         )

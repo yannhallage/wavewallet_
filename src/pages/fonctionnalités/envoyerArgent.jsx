@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import toast, { Toaster } from 'react-hot-toast';
-// import { toast } from "sonner"; // Ou ton système de toast
 import { RotatingLines } from "react-loader-spinner";
 import { DialogDemo } from "../../myComponents/DialogDemo";
 import { DrawerMoney } from "../../myComponents/DrawerMoney";
@@ -35,23 +34,21 @@ const EnvoyerArgent = () => {
 
   return (
     <motion.div
-      className="p-6 rounded-lg space-y-6 bg-gray-50 shadow-md max-w-xl mx-auto"
+      className="p-6 rounded-2xl space-y-6 bg-gray-50 shadow-lg max-w-xl mx-auto border border-gray-100"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-xl font-semibold text-gray-800 text-center">
+      <h1 className="text-2xl font-bold text-gray-800 text-center">
         Envoyer de l'argent
       </h1>
 
-      <div className="space-y-6 rounded-md border bg-white p-6 shadow-sm">
-        
-        <div className="flex justify-center items-center space-x-4">
-        
-          {/* <span className="text-sm text-gray-500">à</span> */}
-          <div className="w-1/2 flex space-x-2">
+      <div className="space-y-6 rounded-xl bg-white p-6 shadow-sm">
+        <div className="space-y-2">
+          <p className="text-sm text-gray-600">Envoyer à</p>
+          <div className="flex space-x-2">
             <SelectDemoSend
-              placeholder="Vers"
+              placeholder="Choisir un contact"
               value={to}
               onChange={(e) => setTo(e.target.value)}
             />
@@ -59,11 +56,11 @@ const EnvoyerArgent = () => {
           </div>
         </div>
 
-        <div className="text-center space-y-4">
-          <p className="text-sm text-gray-600">Entrer le montant</p>
+        <div className="space-y-4 text-center">
+          <p className="text-sm text-gray-600">Montant à envoyer</p>
           <input
             type="number"
-            className="text-2xl text-center border rounded-md p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="text-2xl text-center border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
@@ -72,10 +69,9 @@ const EnvoyerArgent = () => {
           <Proposition onSelect={(val) => setAmount(val)} />
         </div>
 
-        {/* Bouton */}
-        <div className="text-center">
+        <div className="text-center pt-2">
           <Button
-            className="w-full py-4 font-medium text-white bg-blue-600 hover:bg-blue-700 transition"
+            className="w-full py-4 font-semibold text-white bg-blue-600 hover:bg-blue-700 transition rounded-lg"
             onClick={handleTransfer}
           >
             {loadingContent}
@@ -83,34 +79,36 @@ const EnvoyerArgent = () => {
         </div>
       </div>
 
-      {/* Dialog + Drawer */}
       <DialogDemo open={dialogOpen} onOpenChange={setDialogOpen} />
       <DrawerMoney tester={justTest} />
     </motion.div>
+
   );
 };
 
 export default EnvoyerArgent;
 
-// ----------------------
 
 const BalanceDisponible = () => (
-  <p className="text-sm text-gray-600">Balance disponible : 1000.00</p>
+  <p className="text-sm text-gray-500">
+    Balance disponible : <span className="font-semibold text-gray-700">1 000.00 FCFA</span>
+  </p>
 );
 
 const Proposition = ({ onSelect }) => {
-  const amounts = ["1000", "5000", "10000", "25000"];
+  const amounts = ["1 000", "5 000", "10 000", "25 000"];
   return (
     <div className="flex justify-center flex-wrap gap-2 pt-2">
       {amounts.map((amt) => (
         <button
           key={amt}
-          className="border px-4 py-2 rounded-full text-sm hover:bg-gray-100 transition"
-          onClick={() => onSelect(amt)}
+          className="border border-gray-300 px-4 py-2 rounded-full text-sm bg-gray-50 hover:bg-blue-50 hover:border-blue-400 hover:text-blue-600 transition"
+          onClick={() => onSelect(amt.replace(/\s/g, ""))}
         >
-          {amt}
+          {amt} FCFA
         </button>
       ))}
     </div>
   );
 };
+

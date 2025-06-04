@@ -26,7 +26,7 @@ export function DialogDemo({ open, onOpenChange }) {
             setShowDrawer(true)
             setPassword('')
         } else {
-            toast.error('Please enter a password');
+            toast.error('Entrez votre mot de passe');
         }
     };
 
