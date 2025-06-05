@@ -25,7 +25,7 @@ const Component_Router = () => {
                 <Route path="*" element={<Notfound />} />
             </Routes>
         </Router>
-    );
+        );
 };
 
 export default Component_Router;
