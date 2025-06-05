@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { RotatingLines } from "react-loader-spinner"
+import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import { DrawerDemo } from "../myComponents/DrawerDemo"
 import { Label } from "@/components/ui/label"
@@ -28,11 +29,28 @@ const NumberPhone = () => {
         setTstButton(<RotatingLines />)
         setTimeout(() => {
             console.log("Email:", numero)
+            SendingDonnee(numero)
             setJustTest(true)
             setTstButton('Suivant')
         }, 2000)
         setJustTest(false)
 
+    }
+
+    const SendingDonnee = (donneeInscription) => {
+        axios.post('http://localhost:3000/api/wavewallet/inscription/definitive/numero', {
+            numeroTel: donneeInscription
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                console.log('Donnée envoyée', response.data)
+            })
+            .catch(error => {
+                console.log("une erreur au niveau de l'auth : ", error)
+            })
     }
 
     return (
@@ -45,7 +63,7 @@ const NumberPhone = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <div className="flex justify-between items-start">
-                        <Button variant="ghost" onClick={() => navigate('/inscription')}>
+                        <Button variant="ghost" onClick={() => navigate('/')}>
                             ←
                         </Button>
 

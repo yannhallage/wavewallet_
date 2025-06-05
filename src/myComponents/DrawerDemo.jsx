@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
 import { InputOTPDemo } from "./InputOTPDemo"
+import axios from "axios";
 
 export function DrawerDemo({ tester }) {
     const [open, setOpen] = React.useState(false)
@@ -27,17 +28,13 @@ export function DrawerDemo({ tester }) {
         }
     }, [tester])
 
-    // const handleSliderChange = (newValue) => {
-    //     setValue(newValue[0])
-    // }
-
-    // const handleInputChange = (e) => {
-    //     const newValue = parseInt(e.target.value) || 0
-    //     setValue(newValue)
-    // }
+    const handleOTPChange = (value) => {
+        setValue(value)
+    }
 
     const handleSubmit = () => {
-        console.log("Valeur sélectionnée :", value)
+        // console.log("Valeur sélectionnée :", value)
+        SendingDonnee(value)
         setOpen(false)
     }
 
@@ -56,7 +53,7 @@ export function DrawerDemo({ tester }) {
                     </DrawerHeader>
 
                     <div className="p-4 space-y-4 ml-11">
-                        <InputOTPDemo />
+                        <InputOTPDemo onChange={handleOTPChange} />
                     </div>
 
                     <DrawerFooter>

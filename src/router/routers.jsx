@@ -18,8 +18,8 @@ const Component_Router = () => {
                 <Route path="/authentification" element={<Authentification />} />
                 <Route path="/verification" element={<CodeLoginStep />} />
                 <Route path="/verification/otp" element={<CodeOTP />} />
-                <Route path="/inscription" element={<Inscription />} />
-                <Route path="/inscription/number" element={<NumberPhone />} />
+                <Route path="/inscription" element={<NumberPhone />} />
+                {/* <Route path="/inscription/number" element={<NumberPhone />} /> */}
                 <Route path="/inscription/informations" element={<Informations />} />
                 <Route path="/myaccount" element={<MyAccount />} />
                 <Route path="*" element={<Notfound />} />

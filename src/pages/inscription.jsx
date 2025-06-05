@@ -22,7 +22,7 @@ const Inscription = () => {
             console.log(email)
             TempsDeVerification(2000);
 
-            navigate('/inscription/number')
+            // navigate('/inscription/number')
             
         } else {
             notify("veuillez remplis les champs")

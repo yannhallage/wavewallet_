@@ -1,5 +1,3 @@
-
-
 import {
     InputOTP,
     InputOTPGroup,
@@ -7,9 +5,16 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 
-export function InputOTPDemo() {
+export function InputOTPDemo({ onChange }) {
     return (
-        <InputOTP maxLength={6}>
+        <InputOTP
+            maxLength={6}
+            onChange={(value) => {
+                if (onChange) {
+                    onChange(value) // Transmet au parent
+                }
+            }}
+        >
             <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />

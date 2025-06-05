@@ -36,7 +36,7 @@ const Informations = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <div className="flex justify-between items-start">
-                        <Button variant="ghost" onClick={() => navigate('/inscription/number')}>
+                        <Button variant="ghost" onClick={() => navigate('/inscription')}>
                             ←
                         </Button>
 
