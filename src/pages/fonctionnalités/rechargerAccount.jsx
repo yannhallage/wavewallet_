@@ -1,4 +1,7 @@
 "use client"
+import { RotatingLines } from "react-loader-spinner"
+
+import toast, { Toaster } from 'react-hot-toast';
 import { Checkbox } from "@/components/ui/checkbox";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -84,11 +87,11 @@ const MethodRechargement = ({ onSelect }) => {
 
 const MethodPaymentAgree = () => {
     const [montant, setMontant] = useState("");
-
+    const [buttonChange, setButtonchange] = useState('Se recharger')
     const presetMontants = ["1 000", "5 000", "10 000", "25 000"];
 
     const handlePresetClick = (val) => {
-        const numeric = val.replace(/\s/g, ""); 
+        const numeric = val.replace(/\s/g, "");
         setMontant(numeric);
     };
 
@@ -144,9 +147,26 @@ const MethodPaymentAgree = () => {
                         className={`w-full py-4 font-semibold text-white transition rounded-lg ${montant ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-300 cursor-not-allowed"
                             }`}
                         disabled={!montant}
+                        onClick={
+                            () => {
+                                setButtonchange(
+                                    <RotatingLines />
+                                )
+                                setTimeout(() => {
+                                    setButtonchange("Se recharger")
+                                    toast.success("votre rechargement a été effectuer")
+                                }, 2000)
+                            }
+                        }
                     >
-                        Envoyer le paiement
+                        {
+                            buttonChange
+                        }
                     </Button>
+                    <Toaster
+                        position="top-center"
+                        reverseOrder={false}
+                    />
                 </div>
             </div>
         </motion.div>
