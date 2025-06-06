@@ -15,10 +15,14 @@ import {
 } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 import { Slider } from "@/components/ui/slider"
+import { useNavigate } from "react-router-dom"
 import { InputOTPDemo } from "./InputOTPDemo"
 import axios from "axios";
+import { DonneesInscription } from "../context/authContext"
 
 export function DrawerDemo({ tester }) {
+    const navigate = useNavigate()
+    const { ajouterNumero, setAjouterNumero, codeOTP_, setCodOTP_ } = React.useContext(DonneesInscription)
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState(50)
 
@@ -33,11 +37,25 @@ export function DrawerDemo({ tester }) {
     }
 
     const handleSubmit = () => {
-        // console.log("Valeur sélectionnée :", value)
-        SendingDonnee(value)
+        console.log(ajouterNumero)
+        SendingDonnee(ajouterNumero, value)
         setOpen(false)
     }
 
+    const SendingDonnee = (donneeInscriptions, autreValeur) => {
+        axios.post(`http://192.168.57.65:8080/otp/verify?numero=%2B${donneeInscriptions}&code=${autreValeur}`, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                console.log('Donnée envoyée', response.data)
+                navigate('/inscription/informations')
+            })
+            .catch(error => {
+                console.log("une erreur au niveau de l'auth : ", error)
+            })
+    }
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>

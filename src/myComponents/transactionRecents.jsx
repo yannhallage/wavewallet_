@@ -34,7 +34,7 @@ const TransactionRecents = () => {
                                 </div>
 
                                 <div className="text-right">
-                                    <p className="text-green-600 font-semibold text-lg">50 000 FCFA</p>
+                                    <p className="text-green-600 font-semibold text-[13px]">50 000 FCFA</p>
                                     <p className="text-xs text-gray-500">{new Date().toLocaleDateString('fr-FR')}</p>
                                 </div>
                             </motion.div>

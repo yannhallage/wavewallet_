@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios";
 import { RotatingLines } from "react-loader-spinner"
 import toast, { Toaster } from 'react-hot-toast';
 // import { DrawerDemo } from "../myComponents/DrawerDemo"
@@ -13,19 +14,32 @@ import toast, { Toaster } from 'react-hot-toast';
 const Informations = () => {
     const [nom, setNom] = useState("")
     const [prenom, setPrenom] = useState("")
-    const [ville, setVille] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordConfirm, setPasswordConfirm] = useState("")
-
+    const [numero, setNumero] = useState("")
+    const [motDePasse, setMotDePasse] = useState("")
+    const [motDePasseConfirm, setmotDePasseConfirm] = useState("")
     const navigate = useNavigate()
-    const [tstButton, setTstButton] = useState("Suivant")
+    const [tstButton] = useState("Suivant")
 
     const handleSubmit = () => {
-        if (nom === "" || prenom === "" || ville === "" || password === "" ) {
-            toast.error('Veuillez remplir tous les champs !')
-        }
+        console.log(
+            numero, nom, prenom, motDePasse
+        )
+        axios.post('http://192.168.57.65:8080/users/register', {
+            nom: nom,
+            prenom: prenom,
+            numero: numero,
+            motDePasse:motDePasse,
+        })
+            .then(response => {
+                console.log(response.data)
+                toast.success('Compte créé avec succès !');
+                setTimeout(() => navigate('/myaccount'), 500);
+            })
+            .catch(error => {
+                toast.error("Erreur lors de la création du compte.");
+                console.log("Erreur backend :", error);
+            })
     }
-
     return (
         <section>
             <div className="min-h-screen flex justify-center items-center bg-[#f5f5f5] px-4">
@@ -76,24 +90,24 @@ const Informations = () => {
                         />
                         <Input
                             type="text"
-                            placeholder="ville"
+                            placeholder="numero"
                             className="w-full"
-                            value={ville}
-                            onChange={(e) => setVille(e.target.value)}
+                            value={numero}
+                            onChange={(e) => setNumero(e.target.value)}
                         />
                         <Input
                             type="password"
                             placeholder="Crée un mot de passe "
                             className="w-full"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={motDePasse}
+                            onChange={(e) => setMotDePasse(e.target.value)}
                         />
                         <Input
                             type="password"
                             placeholder="Confirmez le mot de passe"
                             className="w-full"
-                            value={passwordConfirm}
-                            onChange={(e) => setPasswordConfirm(e.target.value)}
+                            value={motDePasseConfirm}
+                            onChange={(e) => setmotDePasseConfirm(e.target.value)}
                         />
 
                         <Button

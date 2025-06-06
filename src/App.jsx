@@ -23,6 +23,7 @@ const App = () => {
   const [motdepasse_personne, setMotdepasse_personne] = useState('')
   const [montantSold, setMontantSold] = useState(0)
   const [ajouterNumero, setAjouterNumero] = useState([])
+  const [codeOTP_, setCodOTP_] = useState()
   const [changeComponent, setChangeComponent] = useState(
     <TransactionRecents />
   )
@@ -48,7 +49,8 @@ const App = () => {
         montantSold,
         setMontantSold,
         ajouterNumero,
-        setAjouterNumero
+        setAjouterNumero,
+        codeOTP_, setCodOTP_
       }}
     >
       <Component_Router />

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { RotatingLines } from "react-loader-spinner"
 import axios from "axios";
@@ -9,10 +9,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import { DrawerDemo } from "../myComponents/DrawerDemo"
 import { Label } from "@/components/ui/label"
 import { SelectDemo } from "../myComponents/SelectDemo"
+import { DonneesInscription } from "../context/authContext"
 
 
 const NumberPhone = () => {
     const [numero, setNumero] = useState("")
+    const { ajouterNumero, setAjouterNumero } = useContext(DonneesInscription)
     const [justTest, setJustTest] = useState(false)
     const navigate = useNavigate()
     const [tstButton, setTstButton] = useState("Suivant")
@@ -30,6 +32,7 @@ const NumberPhone = () => {
         setTimeout(() => {
             console.log("Email:", numero)
             SendingDonnee(numero)
+            setAjouterNumero(numero)
             setJustTest(true)
             setTstButton('Suivant')
         }, 2000)
@@ -38,9 +41,7 @@ const NumberPhone = () => {
     }
 
     const SendingDonnee = (donneeInscription) => {
-        axios.post('http://localhost:3000/api/wavewallet/inscription/definitive/numero', {
-            numeroTel: donneeInscription
-        }, {
+        axios.post(`http://192.168.57.65:8080/users/register/send-otp?numero=%2B${donneeInscription}`, {
             headers: {
                 "Content-Type": "application/json"
             }
