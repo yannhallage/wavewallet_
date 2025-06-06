@@ -39,7 +39,7 @@ const EnvoyerArgent = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-2xl font-bold text-gray-800 text-center">
+      <h1 className="text-2xl font-bold text-gray-800 ">
         Envoyer de l'argent
       </h1>
 
