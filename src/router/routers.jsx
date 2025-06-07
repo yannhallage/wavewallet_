@@ -49,7 +49,7 @@ const Component_Router = () => {
                     <ProtectedRoute>
                         <MyAccount />
                     </ProtectedRoute>
-                } />
+                    } />
                 <Route path="*" element={
                     <ProtectedRoute>
                         <Notfound />

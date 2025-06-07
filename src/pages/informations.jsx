@@ -41,7 +41,11 @@ const Informations = () => {
                     .then(response => {
                         console.log(response.data);
                         const { token } = response.data
-
+                        const userId = response.data.userId;
+                        if (userId) {
+                            // setInformation_id(userId)
+                            localStorage.setItem('userId', userId);
+                        }
                         localStorage.setItem('token', token);
                         console.log(token)
                         toast.success("Compte créé avec succès !");

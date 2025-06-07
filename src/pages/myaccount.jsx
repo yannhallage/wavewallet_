@@ -6,13 +6,28 @@ import TransactionRecents from "../myComponents/transactionRecents";
 import { DonneesInscription } from "../context/authContext";
 import EnvoyerArgent from "./fonctionnalités/EnvoyerArgent";
 import RechargerAccount from "./fonctionnalités/rechargerAccount";
+import axios from "axios";
+
 
 const MyAccount = () => {
 
     const { changeComponent, setChangeComponent } = useContext(DonneesInscription);
     const [Cash, setCash] = useState(200000)
     const [listenner, setListenner] = useState(false)
-    const [showing, setShowing] = useState('')
+    // const [showing, setShowing] = useState('')
+
+    useEffect(() => {
+        const id = localStorage.getItem('userId')
+        if (!id) return;
+
+        axios.get(`http://localhost:3000/api/wavewallet/myaccount/${id}`)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
 
     const icon_one =
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
