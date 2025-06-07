@@ -1,24 +1,24 @@
-// import { jwtDecode } from 'jwt-decode';
-// import { Navigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { Navigate } from 'react-router-dom';
 
-// const isTokenValid = (token) => {
-//     try {
-//         const decoded = jwtDecode(token);
-//         const now = Date.now() / 1000;
-//         return decoded.exp > now;
-//     } catch {
-//         return false;
-//     }
-// };
+const isTokenValid = (token) => {
+    try {
+        const decoded = jwtDecode(token);
+        const now = Date.now() / 1000;
+        return decoded.exp > now;
+    } catch {
+        return false;
+    }
+};
 
-// const RedirectIfAuth = ({ children }) => {
-//     const token = localStorage.getItem('token');
+const RedirectIfAuth = ({ children }) => {
+    const token = localStorage.getItem('token');
 
-//     if (token && isTokenValid(token)) {
-//         return <Navigate to="/home" replace />;
-//     }
+    if (token && isTokenValid(token)) {
+        return <Navigate to="/myaccount" replace />;
+    }
 
-//     return children;
-// };
+    return children;
+};
 
-// export default RedirectIfAuth;
+export default RedirectIfAuth;

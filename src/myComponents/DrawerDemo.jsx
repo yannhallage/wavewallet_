@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom"
 import { InputOTPDemo } from "./InputOTPDemo"
 import axios from "axios";
 import { DonneesInscription } from "../context/authContext"
+import toast from "react-hot-toast"
 
 export function DrawerDemo({ tester }) {
     const navigate = useNavigate()
@@ -38,24 +39,35 @@ export function DrawerDemo({ tester }) {
 
     const handleSubmit = () => {
         console.log(ajouterNumero)
-        SendingDonnee(ajouterNumero, value)
+        // SendingDonnee(ajouterNumero, value)
+        verificationDuCodeOTP(value)
         setOpen(false)
     }
 
-    const SendingDonnee = (donneeInscriptions, autreValeur) => {
-        axios.post(`http://192.168.57.65:8080/otp/verify?numero=%2B${donneeInscriptions}&code=${autreValeur}`, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-            .then(response => {
-                console.log('Donnée envoyée', response.data)
-                navigate('/inscription/informations')
-            })
-            .catch(error => {
-                console.log("une erreur au niveau de l'auth : ", error)
-            })
+    const verificationDuCodeOTP = (code) => {
+        if (code && code === codeOTP_) {
+            console.log("Verification du code OTP : ", code)
+            navigate('/inscription/informations')
+            toast.success(`code OTP correspond`)
+        }else{
+            toast.error(`code OTP incorrect !`)
+        }
     }
+
+    // const SendingDonnee = (donneeInscriptions, autreValeur) => {
+    //     axios.post(`http://192.168.57.65:8080/otp/verify?numero=%2B${donneeInscriptions}&code=${autreValeur}`, {
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //         .then(response => {
+    //             console.log('Donnée envoyée', response.data)
+    //             navigate('/inscription/informations')
+    //         })
+    //         .catch(error => {
+    //             console.log("une erreur au niveau de l'auth : ", error)
+    //         })
+    // }
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>

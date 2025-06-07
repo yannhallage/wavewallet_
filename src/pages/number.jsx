@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { RotatingLines } from "react-loader-spinner"
 import axios from "axios";
@@ -14,7 +14,8 @@ import { DonneesInscription } from "../context/authContext"
 
 const NumberPhone = () => {
     const [numero, setNumero] = useState("")
-    const { ajouterNumero, setAjouterNumero } = useContext(DonneesInscription)
+    const { ajouterNumero, setAjouterNumero, codeOTP_, setCodOTP_, telephone_personne,
+        setTelephone_personne } = useContext(DonneesInscription)
     const [justTest, setJustTest] = useState(false)
     const navigate = useNavigate()
     const [tstButton, setTstButton] = useState("Suivant")
@@ -33,27 +34,44 @@ const NumberPhone = () => {
             console.log("Email:", numero)
             SendingDonnee(numero)
             setAjouterNumero(numero)
-            setJustTest(true)
+            setTelephone_personne(numero)
             setTstButton('Suivant')
         }, 2000)
         setJustTest(false)
 
     }
+    useEffect(() => {
+        console.log(codeOTP_)
+    }, [codeOTP_])
 
-    const SendingDonnee = (donneeInscription) => {
-        axios.post(`http://192.168.57.65:8080/users/register/send-otp?numero=%2B${donneeInscription}`, {
-            headers: {
-                "Content-Type": "application/json"
-            }
+    // const SendingDonnee = (donneeInscription) => {
+    //     axios.post(`http://192.168.57.65:8080/users/register/send-otp?numero=%2B${donneeInscription}`, {
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    //         .then(response => {
+    //             console.log('Donnée envoyée', response.data)
+    //         })
+    //         .catch(error => {
+    //             console.log("une erreur au niveau de l'auth : ", error)
+    //         })
+    // }
+
+    const SendingDonnee = (donneesInscription) => {
+        axios.post(`http://localhost:3000/api/wavewallet/inscription/definitive/numero`, {
+            numeroTel: donneesInscription
         })
             .then(response => {
+                setJustTest(true)
                 console.log('Donnée envoyée', response.data)
+                setCodOTP_(response.data.codeOTP)
             })
             .catch(error => {
-                console.log("une erreur au niveau de l'auth : ", error)
+                console.log("une erreur au niveau de l'authentification : ", error)
+                toast.error(error.response.data.message)
             })
     }
-
     return (
         <section>
             <div className="min-h-screen flex justify-center items-center bg-[#f5f5f5] px-4">

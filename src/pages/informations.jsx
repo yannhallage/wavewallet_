@@ -1,4 +1,5 @@
 
+import * as React from "react"
 
 import { motion } from "framer-motion"
 import { Input } from "@/components/ui/input"
@@ -8,38 +9,52 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import { RotatingLines } from "react-loader-spinner"
 import toast, { Toaster } from 'react-hot-toast';
+import { DonneesInscription } from "../context/authContext"
 // import { DrawerDemo } from "../myComponents/DrawerDemo"
 
 
 const Informations = () => {
     const [nom, setNom] = useState("")
     const [prenom, setPrenom] = useState("")
-    const [numero, setNumero] = useState("")
+    const [ville, setVille] = useState("")
     const [motDePasse, setMotDePasse] = useState("")
     const [motDePasseConfirm, setmotDePasseConfirm] = useState("")
     const navigate = useNavigate()
     const [tstButton] = useState("Suivant")
+    const { telephone_personne } = React.useContext(DonneesInscription)
+
 
     const handleSubmit = () => {
-        console.log(
-            numero, nom, prenom, motDePasse
-        )
-        axios.post('http://192.168.57.65:8080/users/register', {
-            nom: nom,
-            prenom: prenom,
-            numero: numero,
-            motDePasse:motDePasse,
-        })
-            .then(response => {
-                console.log(response.data)
-                toast.success('Compte créé avec succès !');
-                setTimeout(() => navigate('/myaccount'), 500);
-            })
-            .catch(error => {
-                toast.error("Erreur lors de la création du compte.");
-                console.log("Erreur backend :", error);
-            })
-    }
+        if (!nom == '' && !prenom == '' && !ville == '' && !motDePasse == '' && !motDePasseConfirm == '') {
+            if (motDePasse === motDePasseConfirm) {
+                let sold = 0;
+
+                axios.post(`http://localhost:3000/api/wavewallet/inscription/definitive`, {
+
+                    numeroTel: telephone_personne,
+                    name: nom,
+                    prenom: prenom,
+                    sold: sold,
+                    ville: ville,
+                    motdepasse: motDePasse
+                })
+                    .then(response => {
+                        console.log(response.data);
+                        toast.success("Compte créé avec succès !");
+                        setTimeout(() => navigate('/myaccount'), 2000);
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la création du compte :", error);
+                        toast.error("Erreur lors de la création du compte.");
+                    });
+            } else {
+                toast.error("Les mots de passe ne correspondent pas.");
+            }
+        } else {
+            toast.error("Veuillez remplir tous les champs.");
+        }
+    };
+
     return (
         <section>
             <div className="min-h-screen flex justify-center items-center bg-[#f5f5f5] px-4">
@@ -90,10 +105,10 @@ const Informations = () => {
                         />
                         <Input
                             type="text"
-                            placeholder="numero"
+                            placeholder="Ville"
                             className="w-full"
-                            value={numero}
-                            onChange={(e) => setNumero(e.target.value)}
+                            value={ville}
+                            onChange={(e) => setVille(e.target.value)}
                         />
                         <Input
                             type="password"
