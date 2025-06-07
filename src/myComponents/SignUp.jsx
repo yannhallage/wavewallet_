@@ -1,20 +1,22 @@
 import { motion } from "framer-motion"
 import toast, { Toaster } from 'react-hot-toast';
-
+import axios from "axios";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { RotatingLines } from "react-loader-spinner"
 import { useNavigate } from "react-router-dom"
+import { DonneesInscription } from "../context/authContext";
+
 
 const SignUp = () => {
     const navigate = useNavigate()
+    const { numeroOTP, setNumeroOTP } = useContext(DonneesInscription)
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [textForButton, setTextForButton] = useState('Suivant')
-    // const [justAnText, setJustAnText] = useState('')
-    // les valeurs normalemnt des champs 
-    const [email, setEmail] = useState('')
+
+    const [numero, setNumero] = useState('')
     const [password, setPassword] = useState('')
 
 
@@ -22,25 +24,40 @@ const SignUp = () => {
 
     const handleClick = () => {
         setIsLoading(true)
-
         VerificationDesChamps();
-        setTimeout(() => {
-            setIsLoading(false)
-            setShowPassword(true)
-            // setTextForButton('Connexion')
-        }, 2000)
     }
 
     const VerificationDesChamps = () => {
-        if (email.trim() === '' || password.trim() === '') {
-            // setJustAnText('Veuillez remplir tous les champs')
-            notify(
-                'Veuillez remplir tous les champs '
-            );
+        if (numero.trim() === '' || password.trim() === '') {
+            notify('Veuillez remplir tous les champs');
+            setIsLoading(false); // on arrête le loader si les champs sont vides
         } else {
-            console.log(email, password)
+            EnvoieDonneesBack();
         }
     }
+
+    const EnvoieDonneesBack = () => {
+        axios.post(`http://localhost:3000/api/wavewallet/authentification`, {
+            numeroTel: numero,
+            motdepasse: password
+        })
+            .then((response) => {
+                toast.success(response.data.message);
+                setShowPassword(true);
+                setTimeout(() => {
+                    navigate('/verification')
+                    setNumeroOTP(numero)
+                }, 800)
+            })
+            .catch((error) => {
+                const errorMessage = error?.response?.data?.message || "Une erreur est survenue.";
+                toast.error(errorMessage);
+            })
+            .finally(() => {
+                setIsLoading(false); // toujours arrêter le loader à la fin
+            });
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] px-4">
             <motion.div
@@ -54,8 +71,8 @@ const SignUp = () => {
                 <Input
                     placeholder="Email ou numéro de mobile"
                     className="mb-2"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={numero}
+                    onChange={(e) => setNumero(e.target.value)}
                 />
 
                 <Input
@@ -96,8 +113,8 @@ const SignUp = () => {
                     <div className="flex-1 h-px bg-gray-300" />
                 </div>
 
-                <Button variant="outline" className="w-full rounded-full" 
-                onClick ={()=>{navigate("/inscription")}}
+                <Button variant="outline" className="w-full rounded-full"
+                    onClick={() => { navigate("/inscription") }}
                 >
                     Ouvrir un compte
                 </Button>

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion";
 import { NavButtons } from "../myComponents/navButtons";
 import Footer from "../myComponents/footer";
@@ -7,28 +8,57 @@ import { DonneesInscription } from "../context/authContext";
 import EnvoyerArgent from "./fonctionnalités/EnvoyerArgent";
 import RechargerAccount from "./fonctionnalités/rechargerAccount";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast"
 
 
 const MyAccount = () => {
-
+    const navigate = useNavigate()
     const { changeComponent, setChangeComponent } = useContext(DonneesInscription);
     const [Cash, setCash] = useState(200000)
     const [listenner, setListenner] = useState(false)
     // const [showing, setShowing] = useState('')
+    const [informationRecuperer, setInformationRecuperer] = useState([])
 
     useEffect(() => {
-        const id = localStorage.getItem('userId')
+        const id = localStorage.getItem('utilisateurid')
+        // const userid = localStorage.getItem('utilisateurid')
         if (!id) return;
 
         axios.get(`http://localhost:3000/api/wavewallet/myaccount/${id}`)
             .then(response => {
-                console.log(response.data)
+                console.log(response.data.accountWave_personnel)
+                setInformationRecuperer(response.data.accountWave_personnel)
             })
             .catch(error => {
                 console.log(error)
             })
+
+
+        // toats
+        toast('Hello Darkness!',
+            {
+                icon: '👏',
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            }
+        );
     }, [])
 
+    useEffect(() => {
+        console.log(informationRecuperer)
+        if (informationRecuperer.sold == 0) {
+            setCash(informationRecuperer.sold)
+        }
+    }, [informationRecuperer])
+
+    const deconnexion = () => {
+        localStorage.removeItem('utilisateurid')
+        localStorage.removeItem('token')
+        return navigate('/')
+    }
     const icon_one =
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9.75L12 3l9 6.75v9.75A1.5 1.5 0 0 1 19.5 21H4.5A1.5 1.5 0 0 1 3 19.5V9.75z" />
@@ -104,13 +134,15 @@ const MyAccount = () => {
                                 </svg>
                             </span>
 
-                            <span className="px-4 py-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer">
+                            <span className="px-4 py-2 rounded-full transition hover:bg-white/20 backdrop-blur-sm cursor-pointer"
+                                onClick={deconnexion}
+                            >
                                 Déconnexion
                             </span>
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             <section className="md:container md:mx-auto px-4">
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mt-11">
@@ -161,11 +193,19 @@ const MyAccount = () => {
                                 <div className="flex justify-between text-sm">
                                     <div>
                                         <span className="block text-xs text-blue-200">Titulaire</span>
-                                        <span className="font-semibold">Yann Hallage</span>
+                                        <span className="font-semibold">
+                                            {
+                                                informationRecuperer.name
+                                            }
+                                        </span>
                                     </div>
                                     <div>
                                         <span className="block text-xs text-blue-200">Numéro</span>
-                                        <span className="font-semibold">0747170370</span>
+                                        <span className="font-semibold">
+                                            {
+                                                informationRecuperer.numeroTel
+                                            }
+                                        </span>
                                     </div>
                                 </div>
                             </motion.div>
@@ -197,6 +237,10 @@ const MyAccount = () => {
             </section>
             <section className="mt-[170px] ">
                 <Footer
+                />
+                <Toaster
+                    position="top-right"
+                    reverseOrder={false}
                 />
             </section>
         </>

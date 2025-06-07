@@ -22,6 +22,7 @@ const App = () => {
   const [telephone_personne, setTelephone_personne] = useState('')
   const [motdepasse_personne, setMotdepasse_personne] = useState('')
   const [montantSold, setMontantSold] = useState(0)
+  const [numeroOTP, setNumeroOTP] = useState()
   const [ajouterNumero, setAjouterNumero] = useState([])
   const [codeOTP_, setCodOTP_] = useState()
   const [changeComponent, setChangeComponent] = useState(
@@ -50,7 +51,8 @@ const App = () => {
         setMontantSold,
         ajouterNumero,
         setAjouterNumero,
-        codeOTP_, setCodOTP_
+        codeOTP_, setCodOTP_,
+        numeroOTP, setNumeroOTP
       }}
     >
       <Component_Router />

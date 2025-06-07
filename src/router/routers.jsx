@@ -26,13 +26,13 @@ const Component_Router = () => {
                         <Authentification />
                     </RedirectIfAuth>
                 } />
-                <Route path="/verification" element={<ProtectedRoute>
+                <Route path="/verification" element={<RedirectIfAuth>
                     <CodeLoginStep />
-                </ProtectedRoute>} />
+                </RedirectIfAuth>} />
                 <Route path="/verification/otp" element={
-                    <ProtectedRoute>
+                    <RedirectIfAuth>
                         <CodeOTP />
-                    </ProtectedRoute>
+                    </RedirectIfAuth>
                 } />
                 <Route path="/inscription" element={
                     <RedirectIfAuth>

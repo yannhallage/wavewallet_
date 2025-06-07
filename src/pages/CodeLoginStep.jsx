@@ -1,7 +1,12 @@
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
+import { DonneesInscription } from "../context/authContext"
+import { useContext } from "react"
 
 const CodeLoginStep = () => {
+    const navigate = useNavigate()
+    const { numeroOTP, setNumeroOTP } = useContext(DonneesInscription)
     return (
         <div className="min-h-screen flex justify-center items-center bg-[#f5f5f5] px-4">
             <motion.div
@@ -12,7 +17,7 @@ const CodeLoginStep = () => {
             >
                 {/* Header email */}
                 <div className="text-sm text-[#1f1f1f] mb-4 flex justify-between items-center border-b-2 pb-2">
-                    <span className="font-medium">yannhallage2017@gmail.com</span>
+                    <span className="font-medium">{numeroOTP}</span>
                     <a href="#" className="text-[#0070ba] text-sm hover:underline">Ce n’est pas vous ?</a>
                 </div>
 
@@ -33,7 +38,11 @@ const CodeLoginStep = () => {
                 </p>
 
                 {/* Bouton code */}
-                <Button className="w-full bg-[#0070ba] text-white rounded-full font-semibold hover:bg-[#005c9c] mb-4">
+                <Button className="w-full bg-[#0070ba] text-white rounded-full font-semibold hover:bg-[#005c9c] mb-4"
+                onClick={()=>{
+                    navigate('/verification/otp')
+                }}
+                >
                     Obtenir un code
                 </Button>
 
