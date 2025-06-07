@@ -40,6 +40,10 @@ const Informations = () => {
                 })
                     .then(response => {
                         console.log(response.data);
+                        const { token } = response.data
+
+                        localStorage.setItem('token', token);
+                        console.log(token)
                         toast.success("Compte créé avec succès !");
                         setTimeout(() => navigate('/myaccount'), 2000);
                     })
