@@ -163,10 +163,7 @@ const MethodPaymentAgree = () => {
                             buttonChange
                         }
                     </Button>
-                    <Toaster
-                        position="top-center"
-                        reverseOrder={false}
-                    />
+
                 </div>
             </div>
         </motion.div>

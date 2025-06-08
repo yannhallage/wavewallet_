@@ -69,6 +69,7 @@ const MyAccount = () => {
     const deconnexion = () => {
         localStorage.removeItem('utilisateurid')
         localStorage.removeItem('token')
+        setTelephone_personne(null)
         return navigate('/')
     }
     const icon_one =

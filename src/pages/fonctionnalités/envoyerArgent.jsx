@@ -15,22 +15,46 @@ const EnvoyerArgent = () => {
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [loadingContent, setLoadingContent] = useState("Continuer");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [justTest, setJustTest] = useState(false);
+  // const [dialogOpen, setDialogOpen] = useState(false);
+  // const [justTest, setJustTest] = useState(false);
 
   const handleTransfer = () => {
-    if (!amount) {
-      toast.error("Veuillez remplir tous les champs !");
-      return;
-    }
+  if (!amount) {
+    toast.error("Veuillez remplir tous les champs !");
+    return;
+  }
 
-    setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
+
+
+  // Reset UI (optionnel)
+  setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
+  setTimeout(() => {
+    setLoadingContent("Continuer");
+    setAmount("");
+    setTo("");
+
+      const fakePromise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      setLoadingContent("Continuer");
-      setDialogOpen(true);
-      setAmount("");
-    }, 100);
-  };
+      // Pour simuler un succès :
+      resolve();
+
+      // Pour simuler une erreur :
+      // reject();
+    }, 2000); // 2 secondes d'attente simulée
+  });
+
+  toast.promise(
+    fakePromise,
+    {
+      loading: 'Traitement en cours...',
+      success: <b>Transaction simulée avec succès !</b>,
+      error: <b>Échec de la transaction.</b>,
+    }
+  );
+  }, 2000);
+};
+
+
 
   return (
     <motion.div
@@ -79,8 +103,8 @@ const EnvoyerArgent = () => {
         </div>
       </div>
 
-      <DialogDemo open={dialogOpen} onOpenChange={setDialogOpen} />
-      <DrawerMoney tester={justTest} />
+      {/* <DialogDemo open={dialogOpen} onOpenChange={setDialogOpen} />
+      <DrawerMoney tester={justTest} /> */}
     </motion.div>
 
   );
