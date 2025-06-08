@@ -44,7 +44,7 @@ const Informations = () => {
                         const userId = response.data.userId;
                         if (userId) {
                             // setInformation_id(userId)
-                            localStorage.setItem('userId', userId);
+                            localStorage.setItem('utilisateurid', userId);
                         }
                         localStorage.setItem('token', token);
                         console.log(token)

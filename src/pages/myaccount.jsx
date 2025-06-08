@@ -13,7 +13,8 @@ import toast, { Toaster } from "react-hot-toast"
 
 const MyAccount = () => {
     const navigate = useNavigate()
-    const { changeComponent, setChangeComponent } = useContext(DonneesInscription);
+    const { changeComponent, setChangeComponent, telephone_personne,
+        setTelephone_personne, } = useContext(DonneesInscription);
     const [Cash, setCash] = useState(200000)
     const [listenner, setListenner] = useState(false)
     // const [showing, setShowing] = useState('')
@@ -28,6 +29,7 @@ const MyAccount = () => {
             .then(response => {
                 console.log(response.data.accountWave_personnel)
                 setInformationRecuperer(response.data.accountWave_personnel)
+
             })
             .catch(error => {
                 console.log(error)
@@ -35,7 +37,7 @@ const MyAccount = () => {
 
 
         // toats
-        toast('Hello Darkness!',
+        toast('Hello!',
             {
                 icon: '👏',
                 style: {
@@ -47,6 +49,16 @@ const MyAccount = () => {
         );
     }, [])
 
+    if (informationRecuperer) {
+        console.log(informationRecuperer.numeroTel)
+        setTelephone_personne(informationRecuperer.numeroTel)
+    }
+
+    useEffect(()=>{
+        if(telephone_personne){
+            console.log(telephone_personne)
+        }
+    },[telephone_personne])
     useEffect(() => {
         console.log(informationRecuperer)
         if (informationRecuperer.sold == 0) {
