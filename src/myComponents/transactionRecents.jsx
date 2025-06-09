@@ -49,7 +49,12 @@ const TransactionRecents = () => {
                                     />
                                     <div>
                                         <p className="text-gray-800 font-medium text-base">{
-                                            item.type_transaction == "reception" ? `0${item.numero_expediteur}` : `0${item.numero_expediteur}`
+
+                                            item.type_transaction === "reception"
+                                                ? `Reçu de 0${item.numero_expediteur}`
+                                                : item.type_transaction === "envoi"
+                                                    ? `Envoyé à ${item.numero_destinataire}`
+                                                    : `${item.numero_expediteur}`
                                         }</p>
                                         <span className="text-xs inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded-full">
                                             {item.type_transaction}

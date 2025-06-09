@@ -90,7 +90,7 @@ const EnvoyerArgent = () => {
           >
             {loadingContent}
           </Button>
-          <AnimateNumber value={montantSold}/>
+          {/* <AnimateNumber value={montantSold}/> */}
         </div>
       </div>
     </motion.div>

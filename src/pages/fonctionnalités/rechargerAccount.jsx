@@ -4,12 +4,21 @@ import { RotatingLines } from "react-loader-spinner"
 import toast, { Toaster } from 'react-hot-toast';
 import { Checkbox } from "@/components/ui/checkbox";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { DonneesInscription } from "../../context/authContext";
+import axios from "axios";
 
 const RechargerAccount = () => {
-    const [changementDeComposent, setChangementDeComposent] = useState(<MethodRechargement onSelect={() => setChangementDeComposent(<MethodPaymentAgree />)} />);
+    const { telephone_personne, setTelephone_personne, montantSold,
+        setMontantSold } = useContext(DonneesInscription);
+    const [changementDeComposent, setChangementDeComposent] = useState(<MethodRechargement onSelect={() => setChangementDeComposent(<MethodPaymentAgree telephone_={telephone_personne} />)} />);
 
+    useEffect(() => {
+        if (telephone_personne) {
+            console.log(telephone_personne)
+        }
+    }, [telephone_personne])
     return (
         <>
             {changementDeComposent}
@@ -25,13 +34,15 @@ const MethodRechargement = ({ onSelect }) => {
     const methods = [
         {
             id: 1,
-            label: "Carte Visa se terminant par 3443",
-            img: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR_FrTaaaGEk9eULQpb355SxtAFizG5jleBqp_1q8j2dgMxqfHT",
+            label: "E-Recharge",
+            img: "https://www.e-recharge.info/assets/images/e-charge-208x206.jpg",
+            other:'Carte par défaut'
         },
         {
             id: 2,
             label: "Carte MasterCard se terminant par 8910",
             img: "https://www.mastercard.us/content/dam/public/mastercardcom/na/us/en/homepage/Home/mc-logo-52.svg",
+            other:'non disponible'
         },
     ];
 
@@ -64,7 +75,7 @@ const MethodRechargement = ({ onSelect }) => {
                         <div>
                             <div className="text-lg font-medium">{method.label}</div>
                             <div className="text-sm text-gray-600">Plus de 3445B d’espace cloud</div>
-                            <div className="text-sm text-blue-600">Carte par défaut</div>
+                            <div className="text-sm text-blue-600">{method.other}</div>
                         </div>
                     </div>
                 ))}
@@ -85,8 +96,10 @@ const MethodRechargement = ({ onSelect }) => {
 };
 
 
-const MethodPaymentAgree = () => {
+const MethodPaymentAgree = ({ telephone_ }) => {
     const [montant, setMontant] = useState("");
+    const { montantSold,
+        setMontantSold } = useContext(DonneesInscription);
     const [buttonChange, setButtonchange] = useState('Se recharger')
     const presetMontants = ["1 000", "5 000", "10 000", "25 000"];
 
@@ -111,7 +124,7 @@ const MethodPaymentAgree = () => {
                     <div className="flex items-center space-x-3">
                         <input
                             type="text"
-                            value="+33 6 78 90 12 34"
+                            value={telephone_}
                             disabled
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-100 text-gray-600 cursor-not-allowed"
                         />
@@ -154,7 +167,19 @@ const MethodPaymentAgree = () => {
                                 )
                                 setTimeout(() => {
                                     setButtonchange("Se recharger")
+                                    console.log(montant, telephone_)
+                                    axios.put(`http://localhost:3000/api/wavewallet/myaccount/Erecharge`, {
+                                        numeroTel: telephone_,
+                                        montant: montant
+                                    })
+                                        .then(response => {
+                                            console.log(response.data)
+                                        })
+                                        .catch(error => {
+                                            toast.error(error)
+                                        })
                                     toast.success("votre rechargement a été effectuer")
+                                    setMontantSold(parseInt(montant) + parseInt(montantSold))
                                 }, 2000)
                             }
                         }
