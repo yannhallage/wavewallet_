@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
+
 import { RotatingLines } from "react-loader-spinner"
 import toast, { Toaster } from 'react-hot-toast';
 import { DonneesInscription } from "../context/authContext"
@@ -28,7 +29,7 @@ const Informations = () => {
         if (!nom == '' && !prenom == '' && !ville == '' && !motDePasse == '' && !motDePasseConfirm == '') {
             if (motDePasse === motDePasseConfirm) {
                 let sold = 0;
-
+                // inscriptionDefinitive
                 axios.post(`http://localhost:3000/api/wavewallet/inscription/definitive`, {
 
                     numeroTel: telephone_personne,
