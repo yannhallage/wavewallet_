@@ -37,6 +37,10 @@ const Informations = () => {
                     sold: sold,
                     ville: ville,
                     motdepasse: motDePasse
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
                 })
                     .then(response => {
                         console.log(response.data);

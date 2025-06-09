@@ -61,6 +61,10 @@ const NumberPhone = () => {
     const SendingDonnee = (donneesInscription) => {
         axios.post(`http://localhost:3000/api/wavewallet/inscription/definitive/numero`, {
             numeroTel: donneesInscription
+        }, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
         })
             .then(response => {
                 setJustTest(true)

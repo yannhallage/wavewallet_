@@ -36,13 +36,13 @@ const MethodRechargement = ({ onSelect }) => {
             id: 1,
             label: "E-Recharge",
             img: "https://www.e-recharge.info/assets/images/e-charge-208x206.jpg",
-            other:'Carte par défaut'
+            other: 'Carte par défaut'
         },
         {
             id: 2,
             label: "Carte MasterCard se terminant par 8910",
             img: "https://www.mastercard.us/content/dam/public/mastercardcom/na/us/en/homepage/Home/mc-logo-52.svg",
-            other:'non disponible'
+            other: 'non disponible'
         },
     ];
 
@@ -171,6 +171,10 @@ const MethodPaymentAgree = ({ telephone_ }) => {
                                     axios.put(`http://localhost:3000/api/wavewallet/myaccount/Erecharge`, {
                                         numeroTel: telephone_,
                                         montant: montant
+                                    }, {
+                                        headers: {
+                                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                                        }
                                     })
                                         .then(response => {
                                             console.log(response.data)

@@ -11,7 +11,7 @@ import AnimateNumber from "../../myComponents/AnimateNumber/AnimateNumber";
 
 
 const EnvoyerArgent = () => {
-  const { telephone_personne, telephoneDestinataire, setTelephoneDestinataire ,montantSold,
+  const { telephone_personne, telephoneDestinataire, setTelephoneDestinataire, montantSold,
     setMontantSold } = useContext(DonneesInscription);
   const [amount, setAmount] = useState("");
   const [loadingContent, setLoadingContent] = useState("Continuer");
@@ -23,7 +23,7 @@ const EnvoyerArgent = () => {
     }
     setMontantSold(montantSold - amount)
     console.log(montantSold)
-    
+
     setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
     try {
       // Préparation de la date
@@ -37,6 +37,10 @@ const EnvoyerArgent = () => {
         type_transaction: "envoi",
         montant: amount,
         dateTransaction
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
       });
 
       await Promise.all([senderTransaction]);

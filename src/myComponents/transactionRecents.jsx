@@ -10,7 +10,11 @@ const TransactionRecents = () => {
 
     useEffect(() => {
         if (telephone_personne) {
-            axios.get(`http://localhost:3000/api/wavewallet/myaccount/transactions/${telephone_personne}`)
+            axios.get(`http://localhost:3000/api/wavewallet/myaccount/transactions/${telephone_personne}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
                 .then(response => {
                     console.log(response.data.transactions)
                     setTransactions(response.data.transactions || []);

@@ -29,7 +29,11 @@ const MyAccount = () => {
         // const userid = localStorage.getItem('utilisateurid')
         if (!id) return;
 
-        axios.get(`http://localhost:3000/api/wavewallet/myaccount/${id}`)
+        axios.get(`http://localhost:3000/api/wavewallet/myaccount/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(response => {
                 console.log(response.data.accountWave_personnel)
                 setInformationRecuperer(response.data.accountWave_personnel)
