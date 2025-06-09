@@ -1,7 +1,7 @@
 import { SelectDemo } from "../../myComponents/SelectDemo";
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import toast, { Toaster } from 'react-hot-toast';
 import { RotatingLines } from "react-loader-spinner";
@@ -9,9 +9,12 @@ import { DialogDemo } from "../../myComponents/DialogDemo";
 import { DrawerMoney } from "../../myComponents/DrawerMoney";
 import { Addnumber } from "../../myComponents/Addnumber";
 import { SelectDemoSend } from "../../myComponents/SelectDemoSend";
+import { DonneesInscription } from "../../context/authContext";
 
 const EnvoyerArgent = () => {
-  const [from] = useState("Moi");
+  // const [from] = useState("Moi");
+  const { telephoneDestinataire,
+    setTelephoneDestinataire, } = useContext(DonneesInscription)
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [loadingContent, setLoadingContent] = useState("Continuer");
@@ -19,40 +22,36 @@ const EnvoyerArgent = () => {
   // const [justTest, setJustTest] = useState(false);
 
   const handleTransfer = () => {
-  if (!amount) {
-    toast.error("Veuillez remplir tous les champs !");
-    return;
-  }
+    if (!amount || !telephoneDestinataire) {
+      toast.error("Veuillez remplir tous les champs !");
+      return;
+    }
 
-
-
-  // Reset UI (optionnel)
-  setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
-  setTimeout(() => {
-    setLoadingContent("Continuer");
-    setAmount("");
-    setTo("");
+    console.log(amount)
+    console.log(telephoneDestinataire)
+    setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
+    setTimeout(() => {
+      setLoadingContent("Continuer");
+      setAmount("");
+      setTo("");
 
       const fakePromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Pour simuler un succès :
-      resolve();
+        setTimeout(() => {
+          resolve();
 
-      // Pour simuler une erreur :
-      // reject();
-    }, 2000); // 2 secondes d'attente simulée
-  });
+        }, 2000);
+      });
 
-  toast.promise(
-    fakePromise,
-    {
-      loading: 'Traitement en cours...',
-      success: <b>Transaction simulée avec succès !</b>,
-      error: <b>Échec de la transaction.</b>,
-    }
-  );
-  }, 2000);
-};
+      toast.promise(
+        fakePromise,
+        {
+          loading: 'Traitement en cours...',
+          success: <b>Transaction simulée avec succès !</b>,
+          error: <b>Échec de la transaction.</b>,
+        }
+      );
+    }, 2000);
+  };
 
 
 
@@ -73,8 +72,6 @@ const EnvoyerArgent = () => {
           <div className="flex space-x-2">
             <SelectDemoSend
               placeholder="Choisir un contact"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
             />
             <Addnumber />
           </div>
@@ -102,9 +99,6 @@ const EnvoyerArgent = () => {
           </Button>
         </div>
       </div>
-
-      {/* <DialogDemo open={dialogOpen} onOpenChange={setDialogOpen} />
-      <DrawerMoney tester={justTest} /> */}
     </motion.div>
 
   );

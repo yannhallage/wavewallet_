@@ -1,43 +1,48 @@
-import * as React from "react"
+import { useContext } from "react";
 import {
     Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
+    SelectContent,
+    SelectGroup,
+    SelectLabel,
+    SelectItem,
+} from "@/components/ui/select";
+import { DonneesInscription } from "../context/authContext";
 
-import { DonneesInscription } from "../context/authContext"
+export const SelectDemoSend = () => {
+    const {
+        ajouterNumero,
+        telephoneDestinataire,
+        setTelephoneDestinataire,
+    } = useContext(DonneesInscription);
 
-export function SelectDemoSend() {
-    const { ajouterNumero } = React.useContext(DonneesInscription)
+    const handleChange = (value) => {
+        setTelephoneDestinataire(value);
+        console.log("Numéro sélectionné :", value);
+    };
 
-    React.useEffect(() => {
-        console.log(ajouterNumero)
-    }, [ajouterNumero])
     return (
-        <Select>
+        <Select onValueChange={handleChange}>
             <SelectTrigger className="w-[400px]">
-                <SelectValue placeholder="Numéro" />
+                <SelectValue placeholder="Numéro destinataire" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectLabel>Numero de téléphone</SelectLabel>
-                    {
-                        ajouterNumero.length ? ajouterNumero.map((item, index) => {
-                            return (
-                                <SelectItem value={index}>{item}</SelectItem>
-                            )
-                        }) : (
-                            <span className="text-[15px] ml-[110px] text-[#ccc]">
-                                aucun numero
-                            </span>
-                        )
-                    }
+                    <SelectLabel>Numéros de téléphone</SelectLabel>
+                    {ajouterNumero.length > 0 ? (
+                        ajouterNumero.map((item, index) => (
+                            <SelectItem key={index} value={item}>
+                                {item}
+                            </SelectItem>
+                        ))
+                    ) : (
+                        <span className="text-[15px] ml-[110px] text-[#ccc]">
+                            Aucun numéro
+                        </span>
+                    )}
                 </SelectGroup>
             </SelectContent>
         </Select>
-    )
-}
+    );
+};
