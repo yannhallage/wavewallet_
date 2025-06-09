@@ -4,7 +4,7 @@ import axios from "axios";
 import { DonneesInscription } from "../context/authContext";
 
 const TransactionRecents = () => {
-    const { telephone_personne } = useContext(DonneesInscription);
+    const { telephone_personne, setTelephone_personne } = useContext(DonneesInscription);
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -12,6 +12,7 @@ const TransactionRecents = () => {
         if (telephone_personne) {
             axios.get(`http://localhost:3000/api/wavewallet/myaccount/transactions/${telephone_personne}`)
                 .then(response => {
+                    console.log(response.data.transactions)
                     setTransactions(response.data.transactions || []);
                     setIsLoading(false);
                 })
@@ -21,6 +22,7 @@ const TransactionRecents = () => {
                 });
         }
     }, [telephone_personne]);
+
 
     return (
         <div className="p-6 bg-white shadow-xl rounded-2xl space-y-6">
@@ -46,7 +48,9 @@ const TransactionRecents = () => {
                                         className="w-12 h-12 rounded-full object-cover"
                                     />
                                     <div>
-                                        <p className="text-gray-800 font-medium text-base">{item.NomPrenom}</p>
+                                        <p className="text-gray-800 font-medium text-base">{
+                                            item.type_transaction == "reception" ? `0${item.numero_expediteur}` : `0${item.numero_expediteur}`
+                                        }</p>
                                         <span className="text-xs inline-block px-2 py-0.5 bg-green-100 text-green-700 rounded-full">
                                             {item.type_transaction}
                                         </span>

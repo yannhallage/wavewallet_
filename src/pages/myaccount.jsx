@@ -5,17 +5,21 @@ import { NavButtons } from "../myComponents/navButtons";
 import Footer from "../myComponents/footer";
 import TransactionRecents from "../myComponents/transactionRecents";
 import { DonneesInscription } from "../context/authContext";
-import EnvoyerArgent from "./fonctionnalités/EnvoyerArgent";
+
+// Envoye
 import RechargerAccount from "./fonctionnalités/rechargerAccount";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast"
+import EnvoyerArgent from "./fonctionnalités/envoyerArgent";
+import AnimateNumber from "../myComponents/AnimateNumber/AnimateNumber";
 
 
 const MyAccount = () => {
     const navigate = useNavigate()
     const { changeComponent, setChangeComponent, telephone_personne,
-        setTelephone_personne, } = useContext(DonneesInscription);
-    const [Cash, setCash] = useState(200000)
+        setTelephone_personne, montantSold,
+        setMontantSold } = useContext(DonneesInscription);
+    const [cash, setCash] = useState(0)
     const [listenner, setListenner] = useState(false)
     // const [showing, setShowing] = useState('')
     const [informationRecuperer, setInformationRecuperer] = useState([])
@@ -49,20 +53,24 @@ const MyAccount = () => {
         );
     }, [])
 
-    if (informationRecuperer) {
-        console.log(informationRecuperer.numeroTel)
-        setTelephone_personne(informationRecuperer.numeroTel)
-    }
+    useEffect(() => {
+        if (informationRecuperer) {
+            setTelephone_personne(informationRecuperer.numeroTel);
+            setMontantSold(informationRecuperer.sold);
+        }
+    }, [informationRecuperer]);
 
-    useEffect(()=>{
-        if(telephone_personne){
+
+    useEffect(() => {
+        if (telephone_personne) {
             console.log(telephone_personne)
         }
-    },[telephone_personne])
+    }, [telephone_personne])
     useEffect(() => {
         console.log(informationRecuperer)
         if (informationRecuperer.sold == 0) {
             setCash(informationRecuperer.sold)
+            // console.log(cash)
         }
     }, [informationRecuperer])
 
@@ -200,7 +208,12 @@ const MyAccount = () => {
                                         )}
                                     </button>
                                     <span>
-                                        {listenner ? `${Cash.toLocaleString("fr-FR")} FCFA` : "************"}
+                                        {listenner ? (
+                                            <AnimateNumber value={montantSold} />
+                                        ) : (
+                                            <span>************</span>
+                                        )}
+                                        {/* {listenner ? `${montantSold.toLocaleString("fr-FR")} FCFA` : "************"} */}
                                     </span>
                                 </div>
                                 <div className="flex justify-between text-sm">

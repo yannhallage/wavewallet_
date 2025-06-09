@@ -1,59 +1,56 @@
-import { SelectDemo } from "../../myComponents/SelectDemo";
-
-import { Button } from "@/components/ui/button";
 import { useContext, useState } from "react";
 import { motion } from "framer-motion";
-import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
+import toast from 'react-hot-toast';
 import { RotatingLines } from "react-loader-spinner";
-import { DialogDemo } from "../../myComponents/DialogDemo";
-import { DrawerMoney } from "../../myComponents/DrawerMoney";
-import { Addnumber } from "../../myComponents/Addnumber";
+import { Button } from "@/components/ui/button";
 import { SelectDemoSend } from "../../myComponents/SelectDemoSend";
+import { Addnumber } from "../../myComponents/Addnumber";
 import { DonneesInscription } from "../../context/authContext";
+import AnimateNumber from "../../myComponents/AnimateNumber/AnimateNumber";
+
 
 const EnvoyerArgent = () => {
-  // const [from] = useState("Moi");
-  const { telephoneDestinataire,
-    setTelephoneDestinataire, } = useContext(DonneesInscription)
-  const [to, setTo] = useState("");
+  const { telephone_personne, telephoneDestinataire, setTelephoneDestinataire ,montantSold,
+    setMontantSold } = useContext(DonneesInscription);
   const [amount, setAmount] = useState("");
   const [loadingContent, setLoadingContent] = useState("Continuer");
-  // const [dialogOpen, setDialogOpen] = useState(false);
-  // const [justTest, setJustTest] = useState(false);
 
-  const handleTransfer = () => {
+  const handleTransfer = async () => {
     if (!amount || !telephoneDestinataire) {
       toast.error("Veuillez remplir tous les champs !");
       return;
     }
-
-    console.log(amount)
-    console.log(telephoneDestinataire)
+    setMontantSold(montantSold - amount)
+    console.log(montantSold)
+    
     setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
-    setTimeout(() => {
-      setLoadingContent("Continuer");
-      setAmount("");
-      setTo("");
+    try {
+      // Préparation de la date
+      const now = new Date();
+      const dateTransaction = now.toLocaleString();
 
-      const fakePromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-
-        }, 2000);
+      // Transaction d'envoi (expéditeur)
+      const senderTransaction = axios.post("http://localhost:3000/api/wavewallet/myaccount/transactions", {
+        numero_expediteur: telephone_personne,
+        numero_destinataire: telephoneDestinataire,
+        type_transaction: "envoi",
+        montant: amount,
+        dateTransaction
       });
 
-      toast.promise(
-        fakePromise,
-        {
-          loading: 'Traitement en cours...',
-          success: <b>Transaction simulée avec succès !</b>,
-          error: <b>Échec de la transaction.</b>,
-        }
-      );
-    }, 2000);
+      await Promise.all([senderTransaction]);
+
+      toast.success("Transaction envoyée avec succès !");
+      setAmount("");
+      setTelephoneDestinataire(null);
+    } catch (error) {
+      console.error(error);
+      toast.error("Échec de la transaction.");
+    } finally {
+      setLoadingContent("Continuer");
+    }
   };
-
-
 
   return (
     <motion.div
@@ -62,17 +59,13 @@ const EnvoyerArgent = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="text-2xl font-bold text-gray-">
-        Envoyer de l'argent
-      </h1>
+      <h1 className="text-2xl font-bold">Envoyer de l'argent</h1>
 
       <div className="space-y-6 rounded-xl bg-white p-6 shadow-sm">
         <div className="space-y-2">
           <p className="text-sm text-gray-600">Envoyer à</p>
           <div className="flex space-x-2">
-            <SelectDemoSend
-              placeholder="Choisir un contact"
-            />
+            <SelectDemoSend placeholder="Choisir un contact" />
             <Addnumber />
           </div>
         </div>
@@ -97,15 +90,14 @@ const EnvoyerArgent = () => {
           >
             {loadingContent}
           </Button>
+          <AnimateNumber value={montantSold}/>
         </div>
       </div>
     </motion.div>
-
   );
 };
 
 export default EnvoyerArgent;
-
 
 const BalanceDisponible = () => (
   <p className="text-sm text-gray-500">
@@ -129,4 +121,3 @@ const Proposition = ({ onSelect }) => {
     </div>
   );
 };
-
