@@ -116,6 +116,7 @@ const NumberPhone = () => {
                                 type="text"
                                 placeholder="Numéro de téléphone"
                                 className="w-full"
+                                maxlength={10}
                                 value={numero}
                                 onChange={(e) => setNumero(e.target.value)}
                             />

@@ -29,24 +29,24 @@ const CodeOTP = () => {
                         </p>
                     </div>
 
-                    {/* Numéro */}
+
                     <p className="text-center text-[16px] mb-4 text-[#1f1f1f]">
                         Code envoyé a votre numéro.
                     </p>
                     <div className="ml-11">
                         <InputOTPDemo />
                     </div>
-                    {/* Autre méthode */}
+
                     <div className="text-center mb-4">
                         <a href="#" className="text-[#0070ba] text-sm hover:underline">Choisir une autre méthode</a>
                     </div>
 
-                    {/* Info */}
+
                     <p className="text-xs text-gray-500 text-center leading-snug">
                         En sélectionnant Obtenir un code, vous confirmez avoir l’autorisation d’utiliser ce numéro de téléphone et acceptez de recevoir des SMS. Des frais peuvent être appliqués.
                     </p>
 
-                    {/* Langue */}
+
                     <div className="mt-6 text-sm text-gray-500 flex items-center justify-center gap-1">
                         🇨🇮
                         <select className="bg-transparent focus:outline-none">

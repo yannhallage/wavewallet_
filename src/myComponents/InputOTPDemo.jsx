@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useContext } from "react"
 import axios from "axios"
 import { DonneesInscription } from "../context/authContext"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 export function InputOTPDemo({ onChange }) {
     const navigate = useNavigate()
@@ -38,9 +38,9 @@ export function InputOTPDemo({ onChange }) {
         } catch (error) {
             console.error("Erreur lors de la vérification OTP :", error);
 
-            // Pour un affichage plus propre de l’erreur
+            
             const msg = error.response?.data?.message || "Erreur lors de la vérification du code OTP";
-            toast.error(msg);
+            // toast.error(msg);
         }
     };
 
@@ -66,10 +66,10 @@ export function InputOTPDemo({ onChange }) {
                 <InputOTPSlot index={4} />
                 <InputOTPSlot index={5} />
             </InputOTPGroup>
-            <Toaster
+            {/* <Toaster
                 position="top-right"
                 reverseOrder={false}
-            />
+            /> */}
         </InputOTP>
     )
 }

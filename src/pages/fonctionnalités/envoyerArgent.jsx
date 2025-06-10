@@ -9,41 +9,51 @@ import { Addnumber } from "../../myComponents/Addnumber";
 import { DonneesInscription } from "../../context/authContext";
 import AnimateNumber from "../../myComponents/AnimateNumber/AnimateNumber";
 
-
 const EnvoyerArgent = () => {
-  const { telephone_personne, telephoneDestinataire, setTelephoneDestinataire, montantSold,
-    setMontantSold } = useContext(DonneesInscription);
+  const {
+    telephone_personne,
+    telephoneDestinataire,
+    setTelephoneDestinataire,
+    montantSold,
+    setMontantSold,
+  } = useContext(DonneesInscription);
+
   const [amount, setAmount] = useState("");
   const [loadingContent, setLoadingContent] = useState("Continuer");
 
   const handleTransfer = async () => {
-    if (!amount || !telephoneDestinataire) {
-      toast.error("Veuillez remplir tous les champs !");
+    const numericAmount = parseFloat(amount);
+
+    if (!numericAmount || !telephoneDestinataire) {
+      toast.error("Veuillez remplir tous les champs correctement !");
       return;
     }
-    setMontantSold(montantSold - amount)
-    console.log(montantSold)
+
+    if (numericAmount > montantSold) {
+      toast.error("Montant supérieur à votre balance !");
+      return;
+    }
 
     setLoadingContent(<RotatingLines strokeColor="#fff" width="24" />);
+
     try {
-      // Préparation de la date
       const now = new Date();
       const dateTransaction = now.toLocaleString();
 
-      // Transaction d'envoi (expéditeur)
-      const senderTransaction = axios.post("http://localhost:3000/api/wavewallet/myaccount/transactions", {
+      await axios.post("http://localhost:3000/api/wavewallet/myaccount/transactions", {
         numero_expediteur: telephone_personne,
         numero_destinataire: telephoneDestinataire,
         type_transaction: "envoi",
-        montant: amount,
-        dateTransaction
+        montant: numericAmount,
+        dateTransaction,
       }, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
 
-      await Promise.all([senderTransaction]);
+      
+      setMontantSold(prev => prev - numericAmount);
 
       toast.success("Transaction envoyée avec succès !");
       setAmount("");
@@ -83,7 +93,7 @@ const EnvoyerArgent = () => {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
           />
-          <BalanceDisponible />
+          <BalanceDisponible montantVoulu={amount} />
           <Proposition onSelect={(val) => setAmount(val)} />
         </div>
 
@@ -94,7 +104,6 @@ const EnvoyerArgent = () => {
           >
             {loadingContent}
           </Button>
-          {/* <AnimateNumber value={montantSold}/> */}
         </div>
       </div>
     </motion.div>
@@ -103,11 +112,27 @@ const EnvoyerArgent = () => {
 
 export default EnvoyerArgent;
 
-const BalanceDisponible = () => (
-  <p className="text-sm text-gray-500">
-    Balance disponible : <span className="font-semibold text-gray-700">1 000.00 FCFA</span>
-  </p>
-);
+const BalanceDisponible = ({ montantVoulu }) => {
+  const { montantSold } = useContext(DonneesInscription);
+  const numericMontant = parseFloat(montantVoulu);
+
+  if (!numericMontant) return null;
+
+  return (
+    <>
+      {numericMontant > montantSold ? (
+        <p className="text-sm text-red-500">
+          Montant supérieur à la balance disponible ({montantSold} FCFA)
+        </p>
+      ) : (
+        <p className="text-sm text-gray-500">
+          Balance disponible : <span className="font-semibold text-gray-700">{montantSold} FCFA</span>
+        </p>
+      )}
+    </>
+  );
+};
+
 
 const Proposition = ({ onSelect }) => {
   const amounts = ["1 000", "5 000", "10 000", "25 000"];

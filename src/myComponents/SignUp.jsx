@@ -69,8 +69,9 @@ const SignUp = () => {
                 <h1 className="text-2xl font-semibold mb-6 text-black">WaveWallet</h1>
 
                 <Input
-                    placeholder="Email ou numéro de mobile"
+                    placeholder="Numéro de mobile"
                     className="mb-2"
+                    maxlength={10}
                     value={numero}
                     onChange={(e) => setNumero(e.target.value)}
                 />

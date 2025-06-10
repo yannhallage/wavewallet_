@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 const Home_personnal = () => {
     const navigate = useNavigate()
     return (
-        
+
         <>
             <header className="p-4 border">
                 <div className="flex justify-between container mx-auto">
@@ -17,7 +17,7 @@ const Home_personnal = () => {
                     <div className="space-x-2">
                         <button
                             className="border text-[#0070ba] rounded-full p-3"
-                            onClick={() =>{
+                            onClick={() => {
                                 navigate("/authentification")
                             }}
                         >
@@ -25,7 +25,7 @@ const Home_personnal = () => {
                         </button>
                         <button
                             className=" rounded-full p-3  bg-[#0070ba] text-white"
-                            onClick={() => 
+                            onClick={() =>
                                 navigate("/inscription")
                             }
                         >
@@ -48,7 +48,10 @@ const Home_personnal = () => {
                                 <h1 className="text-3xl mb-6">
                                     Votre argent est plus efficace.
                                 </h1>
-                                <button className="text-white text-lg bg-[#0070ba] rounded-full px-6 py-3 hover:bg-[#005c9c] transition">
+                                <button
+                                    className="text-white text-lg bg-[#0070ba] rounded-full px-6 py-3 hover:bg-[#005c9c] transition"
+                                    onClick={() => console.log(true)}
+                                >
                                     Ouvrir un compte gratuitement
                                 </button>
                             </div>
@@ -149,6 +152,7 @@ const Home_personnal = () => {
                             <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
+                                onClick={() => navigate('/inscription')}
                                 className="bg-[#0070ba] hover:bg-[#003087]  text-white font-bold p-5 rounded-full"
                             >
                                 Ouvrir un compte gratuitement
