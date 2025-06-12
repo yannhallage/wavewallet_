@@ -29,7 +29,7 @@ Cette application permet à un utilisateur de **gérer son portefeuille mobile**
 
 ---
 
-## 🖥️ Frontend – React / Next.js
+## 🖥️ Frontend – React
 
 ### Composants clés :
 
