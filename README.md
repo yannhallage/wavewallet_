@@ -62,6 +62,7 @@ src/
 │ └── fonctionnalités/
 │ └── (ex: RechargerAccount.jsx)
 
+echo "// test pair extraordinaire" >> test-coauthor.js
 
 ---
 
