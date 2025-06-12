@@ -147,6 +147,7 @@ npm run dev
 
 ⚙️ Configure .env.local avec les bonnes variables MongoDB, ports, etc.
 
+![GitHub stars](https://img.shields.io/github/stars/TON_UTILISATEUR/TON_REPO?style=social)
 
 👨‍💻 Auteur
 Développé par [Yann Hallage / github.com/yannhallage]
