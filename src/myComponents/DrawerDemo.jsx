@@ -71,7 +71,7 @@ export function DrawerDemo({ tester }) {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                {/* Pas de bouton ici, déclencheur externe */}
+             
             </DrawerTrigger>
             <DrawerContent>
                 <div className="mx-auto w-full max-w-sm">
