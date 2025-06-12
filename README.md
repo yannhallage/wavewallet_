@@ -1,56 +1,66 @@
-# 💰 Rechargement de Compte avec E-Recharge
+# 💸 Application de Portefeuille Mobile – Envoi, Réception, Rechargement
 
-Cette fonctionnalité permet à un utilisateur de **sélectionner un mode de paiement** (comme E-recharge), d’**entrer un montant**, puis d’**effectuer un rechargement de son solde**. Elle est développée en **React (frontend)** et **Node.js / Express (backend)** avec une base de données **MongoDB**.
-
----
-
-## 🔧 Technologies utilisées
-
-- ⚛️ React (Frontend)
-- 💾 MongoDB (Mongoose)
-- 🔙 Node.js / Express (Backend API)
-- 💳 E-Recharge (fictif pour démo)
-- 🧪 react-hot-toast, react-loader-spinner, framer-motion
+Cette application permet à un utilisateur de **gérer son portefeuille mobile** : envoyer de l'argent, recevoir des fonds, et recharger son compte via E-Recharge. Le projet est construit avec **React (Next.js)** côté client, et **Node.js + MongoDB** côté serveur.
 
 ---
 
-## 🚀 Fonctionnalité : Recharger son compte
+## 🚀 Fonctionnalités principales
 
-### Étapes utilisateur :
+### 📤 1. Envoi d'argent
 
-1. **Choix de la méthode de paiement** (`MethodRechargement`)
-2. **Saisie du montant** (`MethodPaymentAgree`)
-3. **Validation et envoi de la demande au serveur**
-4. **Réception d'une confirmation / erreur**
+- Saisie du numéro du destinataire et du montant
+- Validation côté frontend (montant minimum requis, format de numéro)
+- Mise à jour du solde de l’expéditeur
+- Enregistrement d’une transaction dans la base de données (type `"envoi"`)
 
----
+### 📥 2. Réception d'argent
 
-## 🖥️ Frontend – `RechargerAccount.jsx`
+- Le destinataire reçoit une transaction avec son numéro
+- Son solde est crédité automatiquement si nécessaire
+- Une ligne de type `"reception"` est créée dans la base de données
+- Ces données sont consultables via l’historique des transactions
 
-### ✅ Composants
+### 💳 3. Rechargement de compte (E-Recharge)
 
-#### `RechargerAccount`
-
-- Récupère le numéro de téléphone via le contexte `DonneesInscription`
-- Charge le composant `MethodRechargement` au départ
-- Bascule ensuite vers `MethodPaymentAgree` une fois la méthode choisie
-
-#### `MethodRechargement`
-
-- Affiche les moyens de paiement disponibles (actuellement E-Recharge, MasterCard)
-- Permet de sélectionner une méthode et de continuer
-
-#### `MethodPaymentAgree`
-
-- Affiche le numéro de l’utilisateur (pré-rempli)
-- Permet de saisir un **montant** ou de cliquer sur un **montant prédéfini**
-- Valide le formulaire et envoie une requête `POST` vers l'API `/api/recharge`
+- Choix d’une méthode de paiement (ex: E-Recharge)
+- Saisie du montant
+- Envoi d’une requête à l’API backend
+- Crédit du compte et ajout d'une transaction `"rechargement"`
 
 ---
 
-## 🧠 Backend – Exemple d’API recharge
+## 🖥️ Frontend – React / Next.js
 
-### Route `POST /api/recharge`
+### Composants clés :
+
+#### `RechargerAccount.jsx`
+
+- Gère les étapes de rechargement : choix du mode de paiement, saisie du montant
+- Utilise le contexte `DonneesInscription` pour récupérer le numéro utilisateur
+
+#### `MethodRechargement.jsx`
+
+- Permet de choisir une méthode de paiement (E-Recharge ou carte bancaire)
+- Passe à l'étape suivante après sélection
+
+#### `MethodPaymentAgree.jsx`
+
+- Affiche le numéro de téléphone
+- Permet de saisir un montant à recharger
+- Envoie une requête `POST /api/recharge`
+
+#### Liste des transactions
+
+Affiche un historique :
+- Si `type_transaction === "reception"` → affichage : `Reçu de [expéditeur]`
+- Si `type_transaction === "envoi"` → affichage : `Envoyé à [destinataire]`
+- Si `type_transaction === "rechargement"` → affichage : `Rechargé par E-recharge`
+
+---
+
+## 🔙 Backend – Node.js / Express / MongoDB
+
+### 🔁 API pour le rechargement (`POST /api/recharge`)
 
 ```js
 const UpdateServerRechargeAccount = async (req, res) => {
