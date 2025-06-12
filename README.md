@@ -1,6 +1,6 @@
 # 💸 Application de Portefeuille Mobile – Envoi, Réception, Rechargement
 
-Cette application permet à un utilisateur de **gérer son portefeuille mobile** : envoyer de l'argent, recevoir des fonds, et recharger son compte via E-Recharge. Le projet est construit avec **React (Next.js)** côté client, et **Node.js + MongoDB** côté serveur.
+Cette application permet à un utilisateur de **gérer son portefeuille mobile** : envoyer de l'argent, recevoir des fonds, et recharger son compte via E-Recharge. Le projet est construit avec **React** côté client, et **Node.js + MongoDB** côté serveur.
 
 ---
 
