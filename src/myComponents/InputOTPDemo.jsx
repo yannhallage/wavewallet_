@@ -32,15 +32,11 @@ export function InputOTPDemo({ onChange }) {
             setTimeout(() => {
                 navigate('/myaccount')
             }, 500)
-
-            // Redirection si besoin :
-            // navigate('/myaccount');
         } catch (error) {
             console.error("Erreur lors de la vérification OTP :", error);
 
             
             const msg = error.response?.data?.message || "Erreur lors de la vérification du code OTP";
-            // toast.error(msg);
         }
     };
 
