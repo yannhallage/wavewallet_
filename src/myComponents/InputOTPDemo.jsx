@@ -62,10 +62,6 @@ export function InputOTPDemo({ onChange }) {
                 <InputOTPSlot index={4} />
                 <InputOTPSlot index={5} />
             </InputOTPGroup>
-            {/* <Toaster
-                position="top-right"
-                reverseOrder={false}
-            /> */}
         </InputOTP>
     )
 }
