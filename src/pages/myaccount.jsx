@@ -26,7 +26,6 @@ const MyAccount = () => {
 
     useEffect(() => {
         const id = localStorage.getItem('utilisateurid')
-        // const userid = localStorage.getItem('utilisateurid')
         if (!id) return;
 
         axios.get(`http://localhost:3000/api/wavewallet/myaccount/${id}`, {
@@ -74,7 +73,6 @@ const MyAccount = () => {
         console.log(informationRecuperer)
         if (informationRecuperer.sold == 0) {
             setCash(informationRecuperer.sold)
-            // console.log(cash)
         }
     }, [informationRecuperer])
 
@@ -217,7 +215,6 @@ const MyAccount = () => {
                                         ) : (
                                             <span>************</span>
                                         )}
-                                        {/* {listenner ? `${montantSold.toLocaleString("fr-FR")} FCFA` : "************"} */}
                                     </span>
                                 </div>
                                 <div className="flex justify-between text-sm">
